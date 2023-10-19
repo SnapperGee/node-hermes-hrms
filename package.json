@@ -1,0 +1,29 @@
+{
+  "name": "hermes",
+  "version": "0.0.1",
+  "description": "Employee manager.",
+  "private": true,
+  "main": "build/dist/index.mjs",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "build-dist": "tsc -p ./tsconfig.dist.json",
+    "prebuild": "rm -rf ./build/dev",
+    "prebuild-dist": "rm -rf ./build/dist"
+  },
+  "keywords": [
+    "hrms",
+    "employee",
+    "mysql",
+    "manager"
+  ],
+  "author": "Snap",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.2",
+    "tslib": "^2.6.2"
+  }
+}

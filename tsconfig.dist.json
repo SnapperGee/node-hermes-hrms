@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions":
+    {
+      "declaration": true,
+      "outDir": "./build/dist",
+      "preserveConstEnums": false,
+      "skipLibCheck": false,
+      "sourceMap": false
+    }
+  }
