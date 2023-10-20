@@ -4,12 +4,15 @@
   "description": "Employee manager.",
   "private": true,
   "main": "./build/dist/index.mjs",
-  "types": "./build/dist/index.d.mts",
-  "scripts": {
-    "build": "tsc -p ./tsconfig.json",
-    "build-dist": "tsc -p ./tsconfig.dist.json",
-    "prebuild": "rm -rf ./build/dev",
-    "prebuild-dist": "rm -rf ./build/dist"
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SnapperGee/node-hermes-hrms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SnapperGee/node-hermes-hrms/issues"
   },
   "keywords": [
     "hrms",
@@ -19,6 +22,12 @@
   ],
   "author": "Snap",
   "license": "ISC",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "build-dist": "tsc -p ./tsconfig.dist.json",
+    "prebuild": "rm -rf ./build/dev",
+    "prebuild-dist": "rm -rf ./build/dist"
+  },
   "devDependencies": {
     "@types/inquirer": "^9.0.6",
     "@types/node": "^20.8.7",
