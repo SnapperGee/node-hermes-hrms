@@ -27,7 +27,8 @@
     "build": "tsc -p ./tsconfig.json",
     "build-dist": "tsc -p ./tsconfig.dist.json",
     "prebuild": "rm -rf ./build/dev",
-    "prebuild-dist": "rm -rf ./build/dist"
+    "prebuild-dist": "rm -rf ./build/dist",
+    "start": "node ./build/dist/index.mjs"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.6",
