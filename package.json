@@ -26,9 +26,10 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "build-dist": "tsc -p ./tsconfig.dist.json",
+    "dev": "node ./build/dev/hermes.mjs",
     "prebuild": "rm -rf ./build/dev",
     "prebuild-dist": "rm -rf ./build/dist",
-    "start": "node ./build/dist/index.mjs"
+    "start": "node ./build/dist/hermes.mjs"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.6",
