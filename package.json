@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Employee manager.",
   "private": true,
-  "main": "./build/dist/index.mjs",
+  "main": "./build/dist/hermes.mjs",
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
