@@ -52,7 +52,7 @@ export class Role
     public get salary(): number { return this.#salary; }
     public get department(): Department { return this.#department; }
 
-    public equals(obj: unknown | undefined | null): boolean
+    public equals(obj: unknown): boolean
     {
         return obj instanceof Role
             && obj.#id === this.#id

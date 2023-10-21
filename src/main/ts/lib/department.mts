@@ -32,7 +32,7 @@ export class Department
     public get id(): number { return this.#id; }
     public get name(): string { return this.#name; }
 
-    public equals(obj: unknown | undefined | null): boolean
+    public equals(obj: unknown): boolean
     {
         return obj instanceof Department && obj.#id === this.#id && obj.#name === this.#name;
     }

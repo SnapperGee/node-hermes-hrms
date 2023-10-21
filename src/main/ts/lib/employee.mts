@@ -57,7 +57,7 @@ export class Employee
     public get lastName(): string { return this.#lastName; }
     public get role(): Role { return this.#role; }
 
-    public equals(obj: unknown | undefined | null): boolean
+    public equals(obj: unknown): boolean
     {
         return obj instanceof Employee
             && obj.#id === this.#id
