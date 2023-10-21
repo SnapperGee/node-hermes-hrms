@@ -9,8 +9,8 @@ export class Role
     readonly #department: Department;
     readonly #string: string;
 
-    public constructor(id: number, title: string, salary: number, department: Department)
-    public constructor(other: Role)
+    public constructor(id: number, title: string, salary: number, department: Department);
+    public constructor(other: Role);
     constructor(idOrOther: number | Role, title?: string, salary?: number, department?: Department)
     {
         if (typeof idOrOther === "number")

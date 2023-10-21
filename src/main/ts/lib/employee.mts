@@ -12,7 +12,9 @@ export class Employee
     readonly #manager: Employee | null;
     readonly #string: string;
 
-    public constructor(idOrOther: number | Employee, firstName: string, lastName: string, role: Role, manager?: Employee | null)
+    public constructor(id: number, firstName: string, lastName: string, role: Role, manager: Employee | null);
+    public constructor(other: Employee);
+    constructor(idOrOther: number | Employee, firstName?: string, lastName?: string, role?: Role, manager?: Employee | null)
     {
         if (typeof idOrOther === "number")
         {

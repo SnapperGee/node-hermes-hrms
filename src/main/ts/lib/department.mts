@@ -6,8 +6,8 @@ export class Department
     readonly #name: string;
     readonly #string: string;
 
-    public constructor(id: number, name: string)
-    public constructor(other: Department)
+    public constructor(id: number, name: string);
+    public constructor(other: Department);
     constructor(idOrOther: number | Department, name?: string)
     {
         if (typeof idOrOther === "number")
