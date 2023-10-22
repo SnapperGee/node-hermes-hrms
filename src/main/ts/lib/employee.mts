@@ -70,7 +70,7 @@ export class Employee
                     && obj.#role.equals(this.#role));
     }
 
-    public get [Symbol.toStringTag](): string { return this.#string; }
+    public toString(): string { return this.#string; }
     public [inspect.custom](): string { return this.#string; }
 }
 
