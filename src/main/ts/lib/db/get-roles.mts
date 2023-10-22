@@ -13,7 +13,7 @@ export const getRoles = async (departments: Department[]): Promise<Role[]> => ((
 
         if (department === undefined)
         {
-            throw new Error(`${getRoles.name}: no department with id ${department_id}`);
+            throw new TypeError(`${getRoles.name}: no department with id ${department_id}`);
         }
 
         return new Role(id, title, salary, department)

@@ -1,20 +1,18 @@
 import { type Role } from "./role.mjs";
 import { inspect } from "node:util";
 
-const toString = (arg: Employee | null): string => arg === null ? `${arg}`: `"${arg.firstName} ${arg.lastName}"`;
-
 export class Employee
 {
     readonly #id: number;
     readonly #firstName: string;
     readonly #lastName: string;
     readonly #role: Role;
-    readonly #manager: Employee | null;
+    readonly #managerId: number | null;
     readonly #string: string;
 
-    public constructor(id: number, firstName: string, lastName: string, role: Role, manager: Employee | null);
+    public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: number | null);
     public constructor(other: Employee);
-    constructor(idOrOther: number | Employee, firstName?: string, lastName?: string, role?: Role, manager?: Employee | null)
+    constructor(idOrOther: number | Employee, firstName?: string, lastName?: string, role?: Role, managerId?: number | null)
     {
         if (typeof idOrOther === "number")
         {
@@ -37,9 +35,8 @@ export class Employee
             this.#firstName = firstName;
             this.#lastName = lastName;
             this.#role = role;
-            this.#manager = manager ?? null;
-            this.#string = `${new.target.name} {id: ${this.#id}, firstName: "${this.#firstName}", lastName: "${this.#lastName}", role: ${this.#role}, manager: ${toString(this.#manager)}`;
-
+            this.#managerId = managerId ?? null;
+            this.#string = `${new.target.name} {id: ${this.#id}, firstName: "${this.#firstName}", lastName: "${this.#lastName}", role: ${this.#role}, managerI: ${this.#managerId}`;
         }
         else
         {
@@ -47,7 +44,7 @@ export class Employee
             this.#firstName = idOrOther.#firstName;
             this.#lastName = idOrOther.#lastName;
             this.#role = idOrOther.#role;
-            this.#manager = idOrOther.#manager;
+            this.#managerId = idOrOther.#managerId;
             this.#string = idOrOther.#string;
         }
     }
@@ -56,6 +53,7 @@ export class Employee
     public get firstName(): string { return this.#firstName; }
     public get lastName(): string { return this.#lastName; }
     public get role(): Role { return this.#role; }
+    public get managerId(): number | null { return this.#managerId; }
 
     public equals(obj: unknown): boolean
     {
@@ -64,11 +62,12 @@ export class Employee
             && obj.#firstName === this.#firstName
             && obj.#lastName === this.#lastName
             && obj.#role.equals(this.#role)
-            && (obj.#manager === this.#manager ||    obj.#manager !== null && this.#manager !== null
-                                                  && obj.#manager.id === this.#manager.#id
-                                                  && obj.#manager.firstName === this.#manager.#firstName
-                                                  && obj.#manager.lastName === this.#manager.#lastName
-                                                  && obj.#manager.role.equals(this.#manager.#role));
+            && (obj.#managerId === this.#managerId
+                || obj.#managerId !== null && this.#managerId !== null
+                    && obj.#id === this.#id
+                    && obj.#firstName === this.#firstName
+                    && obj.#lastName === this.#lastName
+                    && obj.#role.equals(this.#role));
     }
 
     public get [Symbol.toStringTag](): string { return this.#string; }
