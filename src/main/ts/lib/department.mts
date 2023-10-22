@@ -37,6 +37,7 @@ export class Department
         return obj instanceof Department && obj.#id === this.#id && obj.#name === this.#name;
     }
 
+    public toString(): string { return this.#string; }
     public get [Symbol.toStringTag](): string { return this.#string; }
     public [inspect.custom](): string { return this.#string; }
 }

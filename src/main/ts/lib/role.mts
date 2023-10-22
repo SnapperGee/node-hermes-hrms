@@ -61,7 +61,8 @@ export class Role
             && obj.#department.equals(this.#department);
     }
 
-    public get [Symbol.toStringTag](): string { return this.#string; }
+    public toString(): string { return this.#string; }
+    // public get [Symbol.toStringTag](): string { return this.#string; }
     public [inspect.custom](): string { return this.#string; }
 }
 
