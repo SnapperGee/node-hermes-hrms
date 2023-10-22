@@ -36,7 +36,7 @@ export class Employee
             this.#lastName = lastName;
             this.#role = role;
             this.#managerId = managerId ?? null;
-            this.#string = `${new.target.name} {id: ${this.#id}, firstName: "${this.#firstName}", lastName: "${this.#lastName}", role: ${this.#role}, managerI: ${this.#managerId}`;
+            this.#string = `${new.target.name} {id: ${this.#id}, firstName: "${this.#firstName}", lastName: "${this.#lastName}", role: ${this.#role}, managerId: ${this.#managerId}`;
         }
         else
         {
