@@ -1,7 +1,7 @@
 import { type Role } from "./role.mjs";
 import { inspect } from "node:util";
 
-const toString = (arg: unknown): string => typeof arg === "string" ? `"${arg}"` : `${arg}`;
+const toString = (arg: Employee | null): string => arg === null ? `${arg}`: `"${arg.firstName} ${arg.lastName}"`;
 
 export class Employee
 {
