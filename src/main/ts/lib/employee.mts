@@ -1,18 +1,18 @@
 import { type Role } from "./role.mjs";
 import { inspect } from "node:util";
 
-export class Employee
+export class Employee<ManagerType extends number | string>
 {
     readonly #id: number;
     readonly #firstName: string;
     readonly #lastName: string;
     readonly #role: Role;
-    readonly #managerId: number | null;
+    readonly #manager: ManagerType | null;
     readonly #string: string;
 
-    public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: number | null);
-    public constructor(other: Employee);
-    constructor(idOrOther: number | Employee, firstName?: string, lastName?: string, role?: Role, managerId?: number | null)
+    public constructor(id?: number, firstName?: string, lastName?: string, role?: Role, manager?: ManagerType | null);
+    public constructor(other?: Employee<ManagerType>);
+    constructor(idOrOther?: number | Employee<ManagerType>, firstName?: string, lastName?: string, role?: Role, manager?: ManagerType)
     {
         if (typeof idOrOther === "number")
         {
@@ -35,16 +35,21 @@ export class Employee
             this.#firstName = firstName;
             this.#lastName = lastName;
             this.#role = role;
-            this.#managerId = managerId ?? null;
-            this.#string = `${new.target.name} {id: ${this.#id}, firstName: "${this.#firstName}", lastName: "${this.#lastName}", role: ${this.#role}, managerId: ${this.#managerId}`;
+            this.#manager = manager ?? null;
+            this.#string = `${new.target.name} {id: ${this.#id}, firstName: "${this.#firstName}", lastName: "${this.#lastName}", role: ${this.#role}, manager: ${typeof this.#manager === "string" ? `"${this.#manager}"` : `${this.#manager}`}`;
         }
         else
         {
+            if (idOrOther === undefined || idOrOther === null)
+            {
+                throw new TypeError(`${new.target.name}: ${idOrOther} ID or ${new.target.name} object to copy`);
+            }
+
             this.#id = idOrOther.#id;
             this.#firstName = idOrOther.#firstName;
             this.#lastName = idOrOther.#lastName;
             this.#role = idOrOther.#role;
-            this.#managerId = idOrOther.#managerId;
+            this.#manager = idOrOther.#manager;
             this.#string = idOrOther.#string;
         }
     }
@@ -53,7 +58,7 @@ export class Employee
     public get firstName(): string { return this.#firstName; }
     public get lastName(): string { return this.#lastName; }
     public get role(): Role { return this.#role; }
-    public get managerId(): number | null { return this.#managerId; }
+    public get manager(): ManagerType | null { return this.#manager; }
 
     public equals(obj: unknown): boolean
     {
@@ -62,16 +67,32 @@ export class Employee
             && obj.#firstName === this.#firstName
             && obj.#lastName === this.#lastName
             && obj.#role.equals(this.#role)
-            && (obj.#managerId === this.#managerId
-                || obj.#managerId !== null && this.#managerId !== null
+            && (obj.#manager === this.#manager
+                || obj.#manager !== null && this.#manager !== null
                     && obj.#id === this.#id
                     && obj.#firstName === this.#firstName
                     && obj.#lastName === this.#lastName
                     && obj.#role.equals(this.#role));
     }
-
     public toString(): string { return this.#string; }
     public [inspect.custom](): string { return this.#string; }
 }
 
-export default Employee;
+export class EmployeeWithManagerID extends Employee<number>
+{
+    public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: number | null);
+    public constructor(other: EmployeeWithManagerID);
+    constructor(idOrOther: number | EmployeeWithManagerID, firstName?: string, lastName?: string, role?: Role, managerId?: number | null)
+    {
+        if (typeof idOrOther === "number")
+        {
+            super(idOrOther, firstName, lastName, role, managerId);
+        }
+        else
+        {
+            super(idOrOther);
+        }
+    }
+}
+
+export default EmployeeWithManagerID;
