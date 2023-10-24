@@ -8,7 +8,7 @@ import { PREFIX, SUFFIX } from "./util.mjs";
 import { type Question } from "inquirer";
 
 export const initQuestion: Readonly<Question> = Object.freeze({
-    name: "initAction",
+    name: "initResponse",
     type: "list",
     message: "How would you like to query the database?",
     choices: [...Object.values(view), quitChoice],

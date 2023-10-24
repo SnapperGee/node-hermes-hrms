@@ -11,15 +11,22 @@ while (quit === false)
 {
     const answers = await inquirer.prompt([initQuestion]);
 
-    if (answers.initAction.name === "quit")
+    if (typeof answers.initResponse === "string")
     {
-        quit = (await inquirer.prompt([answers.initAction])).quit;
+        console.log(answers.initResponse);
     }
 
-    if (typeof answers.initAction === "string")
+    if (answers.initResponse.name !== undefined)
     {
-        console.log(answers.initAction);
+        switch (answers.initResponse.name) {
+            case "quit":
+                quit = (await inquirer.prompt([answers.initResponse])).quit;
+                break;
+            default:
+                throw new Error(`Unrecognized answer init action name: "${answers.initResponse.name}"`);
+        }
     }
 }
 
+console.log("Exiting hermes...");
 process.exit();
