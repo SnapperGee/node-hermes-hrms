@@ -1,18 +1,26 @@
+import { type Department} from "./department.mjs";
 import { type Role } from "./role.mjs";
 import { inspect } from "node:util";
 
-export class Employee<ManagerType extends number | string>
+interface SimplifiedRoleType
+{
+    title: string,
+    salary: number,
+    department: string
+};
+
+export class Employee<RoleType extends Role | SimplifiedRoleType,  ManagerType extends number | string>
 {
     readonly #id: number;
     readonly #firstName: string;
     readonly #lastName: string;
-    readonly #role: Role;
+    readonly #role: RoleType;
     readonly #manager: ManagerType | null;
     readonly #string: string;
 
-    public constructor(id?: number, firstName?: string, lastName?: string, role?: Role, manager?: ManagerType | null);
-    public constructor(other?: Employee<ManagerType>);
-    constructor(idOrOther?: number | Employee<ManagerType>, firstName?: string, lastName?: string, role?: Role, manager?: ManagerType)
+    public constructor(id?: number, firstName?: string, lastName?: string, role?: RoleType, manager?: ManagerType | null);
+    public constructor(other?: Employee<RoleType, ManagerType>);
+    constructor(idOrOther?: number | Employee<RoleType, ManagerType>, firstName?: string, lastName?: string, role?: RoleType, manager?: ManagerType)
     {
         if (typeof idOrOther === "number")
         {
@@ -57,7 +65,7 @@ export class Employee<ManagerType extends number | string>
     public get id(): number { return this.#id; }
     public get firstName(): string { return this.#firstName; }
     public get lastName(): string { return this.#lastName; }
-    public get role(): Role { return this.#role; }
+    public get role(): RoleType { return this.#role; }
     public get manager(): ManagerType | null { return this.#manager; }
 
     public equals(obj: unknown): boolean
@@ -78,7 +86,7 @@ export class Employee<ManagerType extends number | string>
     public [inspect.custom](): string { return this.#string; }
 }
 
-export class EmployeeWithManagerID extends Employee<number>
+export class EmployeeWithManagerID extends Employee<Role, number>
 {
     public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: number | null);
     public constructor(other: EmployeeWithManagerID);
@@ -95,15 +103,30 @@ export class EmployeeWithManagerID extends Employee<number>
     }
 }
 
-export class EmployeeWithManagerName extends Employee<string>
+export class EmployeeWithManagerName extends Employee<SimplifiedRoleType, string>
 {
-    public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: string | null);
+    public constructor(id: number, firstName: string, lastName: string, title: string, salary: number, department: string, managerName: string | null);
     public constructor(other: EmployeeWithManagerName);
-    constructor(idOrOther: number | EmployeeWithManagerName, firstName?: string, lastName?: string, role?: Role, managerName?: string | null)
+    constructor(idOrOther: number | EmployeeWithManagerName, firstName?: string, lastName?: string, title?: string, salary?: number, department?: string, managerName?: string | null)
     {
         if (typeof idOrOther === "number")
         {
-            super(idOrOther, firstName, lastName, role, managerName);
+            if (title === undefined || title === null)
+            {
+                throw new TypeError(`${new.target.name}: ${title} title`);
+            }
+
+            if (salary === undefined || salary === null)
+            {
+                throw new TypeError(`${new.target.name}: ${salary} salary`);
+            }
+
+            if (department === undefined || department === null)
+            {
+                throw new TypeError(`${new.target.name}: ${department} department`);
+            }
+
+            super(idOrOther, firstName, lastName, {title, salary, department}, managerName);
         }
         else
         {
