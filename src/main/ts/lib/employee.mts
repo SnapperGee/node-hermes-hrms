@@ -133,4 +133,8 @@ export class EmployeeWithManagerName extends Employee<SimplifiedRoleType, string
             super(idOrOther);
         }
     }
+
+    public get title(): string { return this.role.title; }
+    public get department(): string { return this.role.department; }
+    public get salary(): number { return this.role.salary; }
 }
