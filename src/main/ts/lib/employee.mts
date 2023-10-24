@@ -95,4 +95,19 @@ export class EmployeeWithManagerID extends Employee<number>
     }
 }
 
-export default EmployeeWithManagerID;
+export class EmployeeWithManagerName extends Employee<string>
+{
+    public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: string | null);
+    public constructor(other: EmployeeWithManagerName);
+    constructor(idOrOther: number | EmployeeWithManagerName, firstName?: string, lastName?: string, role?: Role, managerName?: string | null)
+    {
+        if (typeof idOrOther === "number")
+        {
+            super(idOrOther, firstName, lastName, role, managerName);
+        }
+        else
+        {
+            super(idOrOther);
+        }
+    }
+}
