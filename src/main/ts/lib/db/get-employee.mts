@@ -20,9 +20,18 @@ export const getEmployeeTable = async (roles: Role[]): Promise<Employee[]> => Pr
     }
 ));
 
-type T = {id: number, first_name: string, last_name: string, title: string, department: string, salary: number,manager: string | null};
+export interface FormattedEmployee
+{
+    id: number,
+    first_name: string,
+    last_name: string,
+    title: string,
+    department: string,
+    salary: number,
+    manager: string | null
+};
 
-export const getEmployeesView = async (): Promise<T[]> => Promise.all(((await connectionPool.execute("SELECT * FROM employees_view"))[0] as T[])
+export const getEmployeesView = async (): Promise<FormattedEmployee[]> => Promise.all(((await connectionPool.execute("SELECT * FROM employees_view"))[0] as FormattedEmployee[])
     .map(async ({id, first_name, last_name, title, department, salary, manager}) => ({id, first_name, last_name, title, department, salary, manager}) ));
 
 export default getEmployeeTable;
