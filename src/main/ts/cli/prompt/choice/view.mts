@@ -2,9 +2,9 @@
  * @module view
  */
 
-import { readDepartments } from "../../../lib/db/read-departments.mjs";
-import { readRoles } from "../../../lib/db/read-roles.mjs";
-import { readEmployeesView } from "../../../lib/db/read-employee.mjs";
+import { readDepartments } from "../../../lib/db/read/read-departments.mjs";
+import { readRoles } from "../../../lib/db/read/read-roles.mjs";
+import { readEmployeesView } from "../../../lib/db/read/read-employee.mjs";
 import { departmentsToStringGrid, rolesToStringGrid, employeesToStringGrid } from "../../table-grid-string.mjs";
 
 export interface ViewChoice
