@@ -6,7 +6,7 @@ import { type Role } from "../../role.mjs";
 import { EmployeeWithManagerID, EmployeeWithManagerName } from "../../employee.mjs";
 import { connectionPool } from "../connection-pool.mjs";
 
-export const readEmployeeTable = async (roles: Role[]): Promise<EmployeeWithManagerID[]> => Promise.all(((await connectionPool.execute("SELECT * FROM employee"))[0] as {id: number, first_name: string, last_name: string, role_id: number, manager_id: number}[])
+export const readEmployeeTable = async (roles: Role[]): Promise<EmployeeWithManagerID[]> => Promise.all(((await connectionPool.execute("SELECT * FROM employee;"))[0] as {id: number, first_name: string, last_name: string, role_id: number, manager_id: number}[])
     .map(async ({id, first_name, last_name, role_id, manager_id}) =>
     {
         const role = roles.find(role => role.id === role_id);
@@ -20,7 +20,7 @@ export const readEmployeeTable = async (roles: Role[]): Promise<EmployeeWithMana
     }
 ));
 
-export const readEmployeesView = async (): Promise<EmployeeWithManagerName[]> => Promise.all(((await connectionPool.execute("SELECT * FROM employees_view"))[0] as {id: number, first_name: string, last_name: string, title: string, department: string, salary: number, manager: string}[])
+export const readEmployeesView = async (): Promise<EmployeeWithManagerName[]> => Promise.all(((await connectionPool.execute("SELECT * FROM employees_view;"))[0] as {id: number, first_name: string, last_name: string, title: string, department: string, salary: number, manager: string}[])
     .map(async ({id, first_name, last_name, title, department, salary, manager}) => new EmployeeWithManagerName(id, first_name, last_name, title, salary, department, manager) ));
 
 export default readEmployeeTable;
