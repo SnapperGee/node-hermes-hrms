@@ -7,23 +7,23 @@ import { readRoles } from "../../../lib/db/read/read-roles.mjs";
 import { readEmployeesView } from "../../../lib/db/read/read-employee.mjs";
 import { departmentsToStringGrid, rolesToStringGrid, employeesToStringGrid } from "../../table-grid-string.mjs";
 
-export interface ViewChoice
+export interface StringChoice
 {
     name: string;
     value: string
 }
 
-export const viewDepartment: Readonly<ViewChoice> = Object.freeze({
+export const viewDepartment: Readonly<StringChoice> = Object.freeze({
     name: "View All Departments",
     value: departmentsToStringGrid(await readDepartments())
 });
 
-export const viewRoles: Readonly<ViewChoice> = Object.freeze({
+export const viewRoles: Readonly<StringChoice> = Object.freeze({
     name: "View All Roles",
     value: rolesToStringGrid(await readRoles(await readDepartments()))
 });
 
-export const viewEmployees: Readonly<ViewChoice> = Object.freeze({
+export const viewEmployees: Readonly<StringChoice> = Object.freeze({
     name: "View All Employees",
     value: employeesToStringGrid(await readEmployeesView())
 });
