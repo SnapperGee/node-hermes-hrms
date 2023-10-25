@@ -3,13 +3,13 @@
  */
 
 import { initQuestion } from "./cli/prompt/question.mjs";
-import inquirer from "inquirer";
+import inquirer, { Answers } from "inquirer";
 
 let quit: boolean = false;
 
 while (quit === false)
 {
-    const answers = await inquirer.prompt([initQuestion]);
+    const answers: Answers = await inquirer.prompt([initQuestion]);
 
     if (typeof answers.initResponse === "string")
     {
@@ -18,7 +18,8 @@ while (quit === false)
 
     if (answers.initResponse.name !== undefined)
     {
-        switch (answers.initResponse.name) {
+        switch (answers.initResponse.name)
+        {
             case "quit":
                 quit = (await inquirer.prompt([answers.initResponse])).quit;
                 break;
