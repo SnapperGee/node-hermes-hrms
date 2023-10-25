@@ -2,9 +2,9 @@
  * @module view
  */
 
-import { getDepartments } from "../../../lib/db/get-departments.mjs";
-import { getRoles } from "../../../lib/db/get-roles.mjs";
-import { getEmployeesView } from "../../../lib/db/get-employee.mjs";
+import { readDepartments } from "../../../lib/db/read-departments.mjs";
+import { readRoles } from "../../../lib/db/read-roles.mjs";
+import { readEmployeesView } from "../../../lib/db/read-employee.mjs";
 import { departmentsToStringGrid, rolesToStringGrid, employeesToStringGrid } from "../../table-grid-string.mjs";
 
 export interface ViewChoice
@@ -15,17 +15,17 @@ export interface ViewChoice
 
 export const viewDepartment: Readonly<ViewChoice> = Object.freeze({
     name: "View All Departments",
-    value: departmentsToStringGrid(await getDepartments())
+    value: departmentsToStringGrid(await readDepartments())
 });
 
 export const viewRoles: Readonly<ViewChoice> = Object.freeze({
     name: "View All Roles",
-    value: rolesToStringGrid(await getRoles(await getDepartments()))
+    value: rolesToStringGrid(await readRoles(await readDepartments()))
 });
 
 export const viewEmployees: Readonly<ViewChoice> = Object.freeze({
     name: "View All Employees",
-    value: employeesToStringGrid(await getEmployeesView())
+    value: employeesToStringGrid(await readEmployeesView())
 });
 
 export const view = Object.freeze({
