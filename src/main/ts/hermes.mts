@@ -3,13 +3,11 @@
  */
 
 import { quitQuestion } from "./cli/prompt/question/question-quit.mjs";
-import { readDepartments } from "./lib/db/read/read-departments.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
-import { readRoles } from "./lib/db/read/read-roles.mjs";
 import { Role } from "./lib/role.mjs";
 import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
-import { readEmployeesView } from "./lib/db/read/read-employee.mjs";
+import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { queryQuestion } from "./cli/prompt/query-question.mjs";

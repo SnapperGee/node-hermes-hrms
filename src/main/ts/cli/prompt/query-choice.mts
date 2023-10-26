@@ -2,11 +2,10 @@
  * @module query-choice
  */
 
+import { addDepartmentQuestion,
+         addRoleQuestion } from "./question/question-add.mjs";
+import { readDepartments, readEmployeesView, readRoles } from "../../lib/db/read.mjs";
 import { quitQuestion } from "./question/question-quit.mjs";
-import { readDepartments } from "../../lib/db/read/read-departments.mjs";
-import { readRoles } from "../../lib/db/read/read-roles.mjs";
-import { readEmployeesView } from "../../lib/db/read/read-employee.mjs";
-import { addDepartmentQuestion } from "./question/question-add.mjs";
 
 export const viewEmployees = Object.freeze({
     name: "View Employees",
@@ -16,6 +15,11 @@ export const viewEmployees = Object.freeze({
 export const viewRoles = Object.freeze({
     name: "View Roles",
     value: readRoles
+});
+
+export const addRole = Object.freeze({
+    name: "Add Role",
+    value: addRoleQuestion
 });
 
 export const viewDepartments = Object.freeze({

@@ -12,21 +12,20 @@ export const addDepartmentQuestion: Question = {
     message: "What is the name of the department you would like to add?",
     filter: (input: string) => Promise.resolve(formatInsertData(input)),
     validate: (input: string) => isValidDepartmentName(input),
-    when(answers: Answers) { return Promise.resolve(answers.initResponse === addDepartmentQuestion); },
+    when: (answers: Answers) => Promise.resolve(answers.initResponse === addDepartmentQuestion),
     default: "",
     prefix: PREFIX,
     suffix: SUFFIX
 };
 
-export const addRoleTitleQuestion: Question = {
+export const addRoleQuestion: Question = {
     type: "input",
     name: "addRole",
     message: "What is the title of the role you would like to add?",
     filter: (input: string) => Promise.resolve(formatInsertData(input)),
     validate: (input: string) => isValidRoleTitle(input),
+    when: (answers: Answers) => Promise.resolve(answers.initResponse === addRoleQuestion),
     default: "",
     prefix: PREFIX,
     suffix: SUFFIX
 };
-
-export default addDepartmentQuestion;
