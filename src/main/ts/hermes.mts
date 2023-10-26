@@ -12,14 +12,14 @@ import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
 import { readEmployeesView } from "./lib/db/read/read-employee.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
-import { initQuestion } from "./cli/prompt/question.mjs";
+import { queryQuestion } from "./cli/prompt/query-question.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import inquirer, { Question, Answers } from "inquirer";
 
 
 do
 {
-    const answers: Answers = await inquirer.prompt([initQuestion, quitQuestion]);
+    const answers: Answers = await inquirer.prompt([queryQuestion, quitQuestion]);
 
     if (answers.quit === true)
     {
