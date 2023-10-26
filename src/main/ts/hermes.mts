@@ -33,8 +33,8 @@ promptLoop: do
             {
                 continue promptLoop;
             }
-        case readDepartments.name:
-            const departments: Department[] = await readDepartments();
+        case readDepartments:
+            const departments: Department[] = await answers.initResponse();
             const departmentsStringGrid: string = departmentsToStringGrid(departments);
             console.log(departmentsStringGrid)
             break;
@@ -42,14 +42,14 @@ promptLoop: do
             const departmentToAdd: string = answers.departmentToAdd;
             await createDepartment(departmentToAdd);
             break;
-        case readRoles.name:
+        case readRoles:
             const departmentsForRoles: Department[] = await readDepartments();
-            const roles: Role[] = await readRoles(departmentsForRoles);
+            const roles: Role[] = await answers.initResponse(departmentsForRoles);
             const rolesStringGrid: string = rolesToStringGrid(roles);
             console.log(rolesStringGrid)
             break;
-        case readEmployeesView.name:
-            const employees: EmployeeWithManagerName[] = await readEmployeesView();
+        case readEmployeesView:
+            const employees: EmployeeWithManagerName[] = await answers.initResponse();
             const employeesStringGrid: string = employeesToStringGrid(employees);
             console.log(employeesStringGrid)
             break;

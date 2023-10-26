@@ -8,25 +8,19 @@ import { readRoles } from "../../lib/db/read/read-roles.mjs";
 import { readEmployeesView } from "../../lib/db/read/read-employee.mjs";
 import { addDepartmentQuestion } from "./question/question-add.mjs";
 
-export interface StringChoice
-{
-    name: string;
-    value: string
-}
-
-export const viewEmployees: Readonly<StringChoice> = Object.freeze({
+export const viewEmployees = Object.freeze({
     name: "View Employees",
-    value: readEmployeesView.name
+    value: readEmployeesView
 });
 
-export const viewRoles: Readonly<StringChoice> = Object.freeze({
+export const viewRoles = Object.freeze({
     name: "View Roles",
-    value: readRoles.name
+    value: readRoles
 });
 
-export const viewDepartments: Readonly<StringChoice> = Object.freeze({
+export const viewDepartments = Object.freeze({
     name: "View Departments",
-    value: readDepartments.name
+    value: readDepartments
 });
 
 export const addDepartment = Object.freeze({
