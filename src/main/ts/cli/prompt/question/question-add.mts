@@ -1,5 +1,5 @@
 /**
- * @module question-add-department
+ * @module question-add
  */
 
 import { formatInsertData, isValidDepartmentName } from "../../../lib/db/util.mjs";
