@@ -2,6 +2,7 @@
  * @module hermes
  */
 
+import { quitQuestion } from "./cli/prompt/question/question-quit.mjs";
 import { readDepartments } from "./lib/db/read/read-departments.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
@@ -15,11 +16,15 @@ import { initQuestion } from "./cli/prompt/question.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import inquirer, { Question, Answers } from "inquirer";
 
-let quit: boolean = false;
 
-while (quit === false)
+do
 {
-    const answers: Answers = await inquirer.prompt([initQuestion]);
+    const answers: Answers = await inquirer.prompt([initQuestion, quitQuestion]);
+
+    if (answers.quit === true)
+    {
+        break;
+    }
 
     if (typeof answers.initResponse === "string")
     {
@@ -45,15 +50,11 @@ while (quit === false)
         }
     }
 
+
     if (typeof answers.initResponse.name === "string")
     {
         switch (answers.initResponse.name)
         {
-            case "quit":
-                const quitQuestion: Question = answers.initResponse;
-                const quitAnswer: Answers = await inquirer.prompt([quitQuestion]);
-                quit = quitAnswer.quit;
-                break;
             case "addDepartment":
                 const addDepartmentQuestion: Question = answers.initResponse;
                 const addDepartmentAnswer: Answers = await inquirer.prompt([addDepartmentQuestion]);
@@ -65,6 +66,7 @@ while (quit === false)
         }
     }
 }
+while (true)
 
 console.log("Exiting hermes...");
 process.exit();
