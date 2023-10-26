@@ -2,8 +2,8 @@
  * @module question
  */
 
-import { view } from "./choice/view.mjs";
-import { quitChoice } from "./choice/quit.mjs";
+import { view } from "./choice/choice-view.mjs";
+import { quitChoice } from "./choice/choice-quit.mjs";
 import { PREFIX, SUFFIX } from "./util.mjs";
 import { type Question } from "inquirer";
 
