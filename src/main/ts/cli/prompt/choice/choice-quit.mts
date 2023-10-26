@@ -1,3 +1,7 @@
+/**
+ * @module choice-quit
+ */
+
 import { quitQuestion } from "../question/quit.mjs";
 
 export const quitChoice = Object.freeze({

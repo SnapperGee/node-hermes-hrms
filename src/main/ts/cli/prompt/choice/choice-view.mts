@@ -1,5 +1,5 @@
 /**
- * @module view
+ * @module choice-view
  */
 
 import { readDepartments } from "../../../lib/db/read/read-departments.mjs";
