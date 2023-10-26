@@ -2,7 +2,7 @@
  * @module choice-quit
  */
 
-import { quitQuestion } from "../question/quit.mjs";
+import { quitQuestion } from "../question/question-quit.mjs";
 
 export const quitChoice = Object.freeze({
     name: "Quit",
