@@ -1,3 +1,7 @@
+/**
+ * @module question-quit
+ */
+
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Question } from "inquirer";
 
