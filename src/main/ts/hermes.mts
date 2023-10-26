@@ -13,57 +13,48 @@ import { readEmployeesView } from "./lib/db/read/read-employee.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { queryQuestion } from "./cli/prompt/query-question.mjs";
+import { addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
-import inquirer, { Question, Answers } from "inquirer";
+import inquirer, { type Answers } from "inquirer";
 
 
-do
+promptLoop: do
 {
-    const answers: Answers = await inquirer.prompt([queryQuestion, quitQuestion]);
+    const answers: Answers = await inquirer.prompt([queryQuestion, addDepartmentQuestion, quitQuestion]);
 
-    if (answers.quit === true)
+    switch (answers.initResponse)
     {
-        break;
-    }
-
-    if (typeof answers.initResponse === "string")
-    {
-        switch (answers.initResponse) {
-            case readDepartments.name:
-                const departments: Department[] = await readDepartments();
-                const departmentsStringGrid: string = departmentsToStringGrid(departments);
-                console.log(departmentsStringGrid)
-                break;
-            case readRoles.name:
-                const departmentsForRoles: Department[] = await readDepartments();
-                const roles: Role[] = await readRoles(departmentsForRoles);
-                const rolesStringGrid: string = rolesToStringGrid(roles);
-                console.log(rolesStringGrid)
-                break;
-            case readEmployeesView.name:
-                const employees: EmployeeWithManagerName[] = await readEmployeesView();
-                const employeesStringGrid: string = employeesToStringGrid(employees);
-                console.log(employeesStringGrid)
-                break;
-            default:
-                throw new Error(`Unrecognized answer init string response: "${answers.initResponse}"`);
-        }
-    }
-
-
-    if (typeof answers.initResponse.name === "string")
-    {
-        switch (answers.initResponse.name)
-        {
-            case "addDepartment":
-                const addDepartmentQuestion: Question = answers.initResponse;
-                const addDepartmentAnswer: Answers = await inquirer.prompt([addDepartmentQuestion]);
-                const departmentToAdd: string = addDepartmentAnswer.addDepartment;
-                await createDepartment(departmentToAdd);
-                break;
-            default:
-                throw new Error(`Unrecognized answer init action name: "${answers.initResponse.name}"`);
-        }
+        case quitQuestion:
+            if (answers.quit === true)
+            {
+                break promptLoop;
+            }
+            else
+            {
+                continue promptLoop;
+            }
+        case readDepartments.name:
+            const departments: Department[] = await readDepartments();
+            const departmentsStringGrid: string = departmentsToStringGrid(departments);
+            console.log(departmentsStringGrid)
+            break;
+        case addDepartmentQuestion:
+            const departmentToAdd: string = answers.departmentToAdd;
+            await createDepartment(departmentToAdd);
+            break;
+        case readRoles.name:
+            const departmentsForRoles: Department[] = await readDepartments();
+            const roles: Role[] = await readRoles(departmentsForRoles);
+            const rolesStringGrid: string = rolesToStringGrid(roles);
+            console.log(rolesStringGrid)
+            break;
+        case readEmployeesView.name:
+            const employees: EmployeeWithManagerName[] = await readEmployeesView();
+            const employeesStringGrid: string = employeesToStringGrid(employees);
+            console.log(employeesStringGrid)
+            break;
+        default:
+            throw new Error(`Unrecognized answer init string response: "${answers.initResponse}"`);
     }
 }
 while (true)
