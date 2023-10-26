@@ -1,5 +1,5 @@
 /**
- * @module db-read
+ * @module read
  */
 
 import { Role } from "../role.mjs";
