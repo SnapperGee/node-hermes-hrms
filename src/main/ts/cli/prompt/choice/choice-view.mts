@@ -15,17 +15,17 @@ export interface StringChoice
 
 export const viewDepartment: Readonly<StringChoice> = Object.freeze({
     name: "View Departments",
-    value: departmentsToStringGrid(await readDepartments())
+    value: readDepartments.name
 });
 
 export const viewRoles: Readonly<StringChoice> = Object.freeze({
     name: "View Roles",
-    value: rolesToStringGrid(await readRoles(await readDepartments()))
+    value: readRoles.name
 });
 
 export const viewEmployees: Readonly<StringChoice> = Object.freeze({
     name: "View Employees",
-    value: employeesToStringGrid(await readEmployeesView())
+    value: readEmployeesView.name
 });
 
 export const view = Object.freeze({

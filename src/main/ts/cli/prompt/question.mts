@@ -14,7 +14,7 @@ export const initQuestion: Readonly<Question> = Object.freeze({
     message: "How would you like to query the database?",
     choices: [view.employees, view.roles, view.departments, addDepartmentChoice, quitChoice],
     prefix: PREFIX,
-    suffix: SUFFIX
+    suffix: SUFFIX,
 });
 
 export default initQuestion;
