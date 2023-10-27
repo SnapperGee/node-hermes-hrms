@@ -10,12 +10,12 @@ export const formatInsertData = (dataToBeInserted: string): string => dataToBeIn
 
 export const departmentNameExists = async (name: string): Promise<boolean> =>
 {
-    return ((await connection.execute("SELECT EXISTS(SELECT 999 FROM department WHERE name = ?) AS doesExist;", [name]))[0] as [{doesExist: number}])[0].doesExist === 1;
+    return ((await connection.execute("SELECT EXISTS(SELECT NULL FROM department WHERE name = ?) AS doesExist;", [name]))[0] as [{doesExist: number}])[0].doesExist === 1;
 };
 
 export const roleTitleDepartmentPairExists = async (title: string, departmentName: string): Promise<boolean> =>
 {
-    return ((await connection.execute("SELECT EXISTS(SELECT 999 FROM roles_view WHERE title = ? AND department_name = ?) AS doesExist;", [title, departmentName]))[0] as [{doesExist: number}])[0].doesExist === 1;
+    return ((await connection.execute("SELECT EXISTS(SELECT NULL FROM roles_view WHERE title = ? AND department_name = ?) AS doesExist;", [title, departmentName]))[0] as [{doesExist: number}])[0].doesExist === 1;
 };
 
 export const isValidDepartmentName = async (name: string): Promise<boolean | string> =>
