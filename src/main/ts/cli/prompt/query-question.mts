@@ -13,6 +13,7 @@ export const queryQuestion: Readonly<Question> = Object.freeze({
     choices: [
         queryChoice.viewEmployees,
         queryChoice.viewRoles,
+        queryChoice.addRole,
         queryChoice.viewDepartments,
         queryChoice.addDepartment,
         queryChoice.quit

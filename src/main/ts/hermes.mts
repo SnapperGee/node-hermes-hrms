@@ -13,6 +13,7 @@ import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { queryQuestion } from "./cli/prompt/query-question.mjs";
 import { addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
+import { rolePrompt } from "./cli/prompt/role-prompt.mjs";
 import inquirer, { type Answers } from "inquirer";
 
 
@@ -31,6 +32,21 @@ promptLoop: do
             {
                 continue promptLoop;
             }
+        case readEmployeesView:
+            const employees: EmployeeWithManagerName[] = await answers.initResponse();
+            const employeesStringGrid: string = employeesToStringGrid(employees);
+            console.log(employeesStringGrid)
+            break;
+        case readRoles:
+            const departmentsForRoles: Department[] = await readDepartments();
+            const roles: Role[] = await answers.initResponse(departmentsForRoles);
+            const rolesStringGrid: string = rolesToStringGrid(roles);
+            console.log(rolesStringGrid)
+            break;
+        case rolePrompt:
+            const {title, department, salary} = await answers.initResponse();
+            console.log(`title: "${title}", department: "${department}" salary: "${salary}"`)
+            break;
         case readDepartments:
             const departments: Department[] = await answers.initResponse();
             const departmentsStringGrid: string = departmentsToStringGrid(departments);
@@ -39,17 +55,6 @@ promptLoop: do
         case addDepartmentQuestion:
             const departmentToAdd: string = answers.departmentToAdd;
             await createDepartment(departmentToAdd);
-            break;
-        case readRoles:
-            const departmentsForRoles: Department[] = await readDepartments();
-            const roles: Role[] = await answers.initResponse(departmentsForRoles);
-            const rolesStringGrid: string = rolesToStringGrid(roles);
-            console.log(rolesStringGrid)
-            break;
-        case readEmployeesView:
-            const employees: EmployeeWithManagerName[] = await answers.initResponse();
-            const employeesStringGrid: string = employeesToStringGrid(employees);
-            console.log(employeesStringGrid)
             break;
         default:
             throw new Error(`Unrecognized answer init string response: "${answers.initResponse}"`);
