@@ -74,30 +74,3 @@ export const isValidRoleTitle = (title: string): boolean | string =>
 
     return true;
 }
-
-export const isValidRoleTitleDepartmentPair = async (title: string, departmentName: string): Promise<boolean | string> =>
-{
-    const roleTitleValidity = isValidRoleTitle(title);
-
-    if (typeof roleTitleValidity === "string")
-    {
-        return roleTitleValidity;
-    }
-
-    if (departmentName.length === 0)
-    {
-        return "An existing department name is required";
-    }
-
-    if ( ! await departmentNameExists(departmentName))
-    {
-        return `Department "${departmentName}" does not exist`;
-    }
-
-    if (await roleTitleDepartmentPairExists(title, departmentName))
-    {
-        return `Role "${title}" in department "${departmentName}" already exists`;
-    }
-
-    return true;
-}

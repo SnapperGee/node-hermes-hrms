@@ -15,7 +15,7 @@ import { addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import { rolePrompt } from "./cli/prompt/role-prompt.mjs";
 import inquirer, { type Answers } from "inquirer";
-
+import { createRole } from "./lib/db/create/create-role.mjs";
 
 promptLoop: do
 {
@@ -44,8 +44,8 @@ promptLoop: do
             console.log(rolesStringGrid)
             break;
         case rolePrompt:
-            const {title, department, salary} = await answers.initResponse();
-            console.log(`title: "${title}", department: "${department}" salary: "${salary}"`)
+            const {title, salary, departmentId} = await answers.initResponse();
+            await createRole(title, salary, departmentId);
             break;
         case readDepartments:
             const departments: Department[] = await answers.initResponse();
