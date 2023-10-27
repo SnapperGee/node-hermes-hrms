@@ -33,7 +33,7 @@ export const roleDepartmentQuestion: Question = Object.freeze({
     type: "list",
     name: "departmentId",
     message: "What department does the role belong to?",
-    choices: async () => (await readDepartments()).map(department => ({name: department.name, value: department.id})),
+    choices: async () => (await readDepartments()).map(({name, id}) => ({name: name, value: id})),
     prefix: PREFIX,
     suffix: SUFFIX
 });
