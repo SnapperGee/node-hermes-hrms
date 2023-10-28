@@ -11,7 +11,7 @@ import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
 import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
-import { queryQuestion } from "./cli/prompt/question-query.mjs";
+import { queryQuestion } from "./cli/prompt/question/question-query.mjs";
 import { roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import inquirer, { type Answers } from "inquirer";

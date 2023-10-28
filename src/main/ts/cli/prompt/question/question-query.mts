@@ -2,8 +2,8 @@
  * @module question-query
  */
 
-import { queryChoice } from "./query-choice.mjs";
-import { PREFIX, SUFFIX } from "./util.mjs";
+import { queryChoice } from "../query-choice.mjs";
+import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Question } from "inquirer";
 
 export const queryQuestion: Readonly<Question> = Object.freeze({
