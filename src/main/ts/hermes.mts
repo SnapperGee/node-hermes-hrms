@@ -15,7 +15,6 @@ import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { createRole } from "./lib/db/create/create-role.mjs";
-import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 
 promptLoop: do
 {
