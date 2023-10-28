@@ -64,7 +64,7 @@ export const addDepartmentQuestion: Question = {
     suffix: SUFFIX
 };
 
-export const roleTitleQuestion: Question = Object.freeze({
+export const addRoleTitleQuestion: Question = Object.freeze({
     type: "input",
     name: "titleOfRoleToAdd",
     message: "What is the title of the role you would like to add?",
@@ -76,7 +76,7 @@ export const roleTitleQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
-export const roleSalaryQuestion: Question = Object.freeze({
+export const addRoleSalaryQuestion: Question = Object.freeze({
     type: "input",
     name: "salaryOfRoleToAdd",
     message: "What is the salary of the role you would like to add?",
@@ -88,7 +88,7 @@ export const roleSalaryQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
-export const roleDepartmentQuestion: Question = Object.freeze({
+export const addRoleDepartmentQuestion: Question = Object.freeze({
     type: "list",
     name: "departmentOfRoleToAdd",
     message: "What department does the role belong to?",
@@ -97,3 +97,16 @@ export const roleDepartmentQuestion: Question = Object.freeze({
     prefix: PREFIX,
     suffix: SUFFIX
 });
+
+export const add = Object.freeze({
+    departmentQuestion: addDepartmentQuestion,
+    employeeFirstNameQuestion: addEmployeeFirstNameQuestion,
+    employeeLastNameQuestion: addEmployeeLastNameQuestion,
+    employeeManagerQuestion: addEmployeeManagerQuestion,
+    employeeRoleQuestion: addEmployeeRoleQuestion,
+    roleDepartmentQuestion: addRoleDepartmentQuestion,
+    roleSalaryQuestion: addRoleSalaryQuestion,
+    roleTitleQuestion: addRoleTitleQuestion
+});
+
+export default add;

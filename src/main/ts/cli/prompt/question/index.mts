@@ -1,14 +1,20 @@
-import { addDepartmentQuestion, roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion } from "./question-add.mjs";
+import { addDepartmentQuestion, addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion,
+         addEmployeeManagerQuestion, addEmployeeRoleQuestion, addRoleDepartmentQuestion,
+         addRoleSalaryQuestion, addRoleTitleQuestion } from "./question-add.mjs";
 import { queryQuestion } from "./question-query.mjs";
 import { quitQuestion } from "./question-quit.mjs";
 
 export const question = Object.freeze({
+    addEmployeeFirstName: addEmployeeFirstNameQuestion,
+    addEmployeeLastName: addEmployeeLastNameQuestion,
+    addEmployeeManager: addEmployeeManagerQuestion,
+    addEmployeeRole: addEmployeeRoleQuestion,
     addDepartment: addDepartmentQuestion,
     query: queryQuestion,
     quit: quitQuestion,
-    roleDepartment: roleDepartmentQuestion,
-    roleSalary: roleSalaryQuestion,
-    roleTitle: roleTitleQuestion
+    roleDepartment: addRoleDepartmentQuestion,
+    roleSalary: addRoleSalaryQuestion,
+    roleTitle: addRoleTitleQuestion
 });
 
 export * from "./question-add.mjs";

@@ -2,9 +2,9 @@
  * @module hermes
  */
 
-import { queryQuestion, quitQuestion, roleTitleQuestion, roleSalaryQuestion,
-         roleDepartmentQuestion, addDepartmentQuestion, addEmployeeFirstNameQuestion,
-         addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion} from "./cli/prompt/question/index.mjs";
+import { queryQuestion, quitQuestion, addRoleTitleQuestion, addRoleSalaryQuestion,
+         addRoleDepartmentQuestion, addDepartmentQuestion, addEmployeeFirstNameQuestion,
+         addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
 import { QueryChoiceString } from "./cli/prompt/query-choice.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
@@ -21,8 +21,8 @@ promptLoop: do
 {
     const answers: Answers = await inquirer.prompt([
         queryQuestion, addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion,
-        addEmployeeRoleQuestion, addEmployeeManagerQuestion, roleTitleQuestion,
-        roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion, quitQuestion
+        addEmployeeRoleQuestion, addEmployeeManagerQuestion, addRoleTitleQuestion,
+        addRoleSalaryQuestion, addRoleDepartmentQuestion, addDepartmentQuestion, quitQuestion
     ]);
 
     switch (answers.queryChoice)
