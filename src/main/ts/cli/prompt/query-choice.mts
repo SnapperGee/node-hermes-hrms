@@ -2,39 +2,45 @@
  * @module query-choice
  */
 
-import { addDepartmentQuestion } from "./question/question-add.mjs";
-import { readDepartments, readEmployeesView, readRoles } from "../../lib/db/read.mjs";
-import { rolePrompt } from "./role-prompt.mjs";
-import { quitQuestion } from "./question/question-quit.mjs";
+export const enum QueryChoiceString
+{
+    VIEW_EMPLOYEES = "View Employees",
+    ADD_EMPLOYEE = "Add Employee",
+    VIEW_ROLES = "View Roles",
+    ADD_ROLE = "Add Role",
+    VIEW_DEPARTMENTS = "View Departments",
+    ADD_DEPARTMENT = "Add Department",
+    QUIT = "Quit"
+}
 
 export const viewEmployees = Object.freeze({
-    name: "View Employees",
-    value: readEmployeesView
+    name: QueryChoiceString.VIEW_EMPLOYEES,
+    value: QueryChoiceString.VIEW_EMPLOYEES
 });
 
 export const viewRoles = Object.freeze({
-    name: "View Roles",
-    value: readRoles
+    name: QueryChoiceString.VIEW_ROLES,
+    value: QueryChoiceString.VIEW_ROLES
 });
 
 export const addRole = Object.freeze({
-    name: "Add Role",
-    value: rolePrompt
+    name: QueryChoiceString.ADD_ROLE,
+    value: QueryChoiceString.ADD_ROLE
 });
 
 export const viewDepartments = Object.freeze({
-    name: "View Departments",
-    value: readDepartments
+    name: QueryChoiceString.VIEW_DEPARTMENTS,
+    value: QueryChoiceString.VIEW_DEPARTMENTS
 });
 
 export const addDepartment = Object.freeze({
-    name: "Add Department",
-    value: addDepartmentQuestion
+    name: QueryChoiceString.ADD_DEPARTMENT,
+    value: QueryChoiceString.ADD_DEPARTMENT
 });
 
 export const quit = Object.freeze({
-    name: "Quit",
-    value: quitQuestion
+    name: QueryChoiceString.QUIT,
+    value: QueryChoiceString.QUIT
 });
 
 export const queryChoice = Object.freeze({

@@ -2,6 +2,7 @@
  * @module hermes
  */
 
+import { QueryChoiceString } from "./cli/prompt/query-choice.mjs";
 import { quitQuestion } from "./cli/prompt/question/question-quit.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
@@ -23,7 +24,7 @@ promptLoop: do
 
     switch (answers.initResponse)
     {
-        case quitQuestion:
+        case QueryChoiceString.QUIT:
             if (answers.quit === true)
             {
                 break promptLoop;
@@ -32,27 +33,32 @@ promptLoop: do
             {
                 continue promptLoop;
             }
-        case readEmployeesView:
-            const employees: EmployeeWithManagerName[] = await answers.initResponse();
+        case QueryChoiceString.VIEW_EMPLOYEES:
+            const employees: EmployeeWithManagerName[] = await readEmployeesView();
             const employeesStringGrid: string = employeesToStringGrid(employees);
             console.log(employeesStringGrid)
             break;
-        case readRoles:
+        // TODO: Implement Add Employee
+        // Prompt employees first name input
+        // Prompt employees last name input
+        // Prompt employees role list
+        // Prompt employees manage list
+        case QueryChoiceString.VIEW_ROLES:
             const departmentsForRoles: Department[] = await readDepartments();
-            const roles: Role[] = await answers.initResponse(departmentsForRoles);
+            const roles: Role[] = await readRoles(departmentsForRoles);
             const rolesStringGrid: string = rolesToStringGrid(roles);
             console.log(rolesStringGrid)
             break;
-        case rolePrompt:
-            const {title, salary, departmentId} = await answers.initResponse();
+        case QueryChoiceString.ADD_ROLE:
+            const {title, salary, departmentId} = await rolePrompt();
             await createRole(title, salary, departmentId);
             break;
-        case readDepartments:
-            const departments: Department[] = await answers.initResponse();
+        case QueryChoiceString.VIEW_DEPARTMENTS:
+            const departments: Department[] = await readDepartments();
             const departmentsStringGrid: string = departmentsToStringGrid(departments);
             console.log(departmentsStringGrid)
             break;
-        case addDepartmentQuestion:
+        case QueryChoiceString.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
             await createDepartment(departmentToAdd);
             break;
