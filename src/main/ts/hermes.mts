@@ -13,9 +13,8 @@ import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
 import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
-import { createDepartment } from "./lib/db/create/create-department.mjs";
+import { insertDepartment, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
-import { createRole } from "./lib/db/create/create-role.mjs";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 
 promptLoop: do
@@ -71,7 +70,7 @@ promptLoop: do
                 continue promptLoop;
             }
 
-            await createRole(title, salary, departmentId);
+            await insertRole(title, salary, departmentId);
             console.log(`\nAdded "${title}" role of "${departmentName}" department with salary $${salary}.\n`);
             break;
         case QueryChoiceString.VIEW_DEPARTMENTS:
@@ -81,7 +80,7 @@ promptLoop: do
             break;
         case QueryChoiceString.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
-            await createDepartment(departmentToAdd);
+            await insertDepartment(departmentToAdd);
             console.log(`\nAdded "${departmentToAdd}" department.\n`);
             break;
         default:
