@@ -55,8 +55,8 @@ promptLoop: do
             const title = answers.titleOfRoleToAdd;
             const salary = answers.salaryOfRoleToAdd;
             const {departmentId, departmentName} = answers.departmentOfRoleToAdd;
-            console.log(`Added "${title}" role of "${departmentName}" department with salary $${salary}`);
             await createRole(title, salary, departmentId);
+            console.log(`Added "${title}" role of "${departmentName}" department with salary $${salary}`);
             break;
         case QueryChoiceString.VIEW_DEPARTMENTS:
             const departments: Department[] = await readDepartments();
@@ -66,6 +66,7 @@ promptLoop: do
         case QueryChoiceString.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
             await createDepartment(departmentToAdd);
+            console.log(`Added "${departmentToAdd}" department`);
             break;
         default:
             throw new Error(`Unrecognized answer init string response: "${answers.initResponse}"`);
