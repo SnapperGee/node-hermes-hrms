@@ -13,11 +13,6 @@ export const departmentNameExists = async (name: string): Promise<boolean> =>
     return ((await connection.execute("SELECT EXISTS(SELECT NULL FROM department WHERE name = ?) AS doesExist;", [name]))[0] as [{doesExist: number}])[0].doesExist === 1;
 };
 
-export const roleTitleDepartmentPairExists = async (title: string, departmentName: string): Promise<boolean> =>
-{
-    return ((await connection.execute("SELECT EXISTS(SELECT NULL FROM roles_view WHERE title = ? AND department_name = ?) AS doesExist;", [title, departmentName]))[0] as [{doesExist: number}])[0].doesExist === 1;
-};
-
 export const isValidDepartmentName = async (name: string): Promise<boolean | string> =>
 {
     if (name.length === 0)
