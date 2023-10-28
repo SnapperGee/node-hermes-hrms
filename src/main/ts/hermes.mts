@@ -13,7 +13,7 @@ import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
 import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
-import { insertDepartment, insertRole } from "./lib/db/insert.mjs";
+import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 
@@ -41,16 +41,12 @@ promptLoop: do
             const employeesStringGrid: string = employeesToStringGrid(employees);
             console.log(employeesStringGrid)
             break;
-        // TODO: Implement Add Employee
-        // Prompt employees first name input
-        // Prompt employees last name input
-        // Prompt employees role list
-        // Prompt employees manage list
         case QueryChoiceString.ADD_EMPLOYEE:
             const newEmployeeFirstName = answers.firstNameOfEmployeeToAdd;
             const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
             const {roleId, roleTitle, roleDepartment} = answers.roleOfEmployeeToAdd;
             const {managerId, managerName} = answers.managerOfEmployeeToAdd;
+            insertEmployee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
             console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartment.name}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
             break;
         case QueryChoiceString.VIEW_ROLES:
