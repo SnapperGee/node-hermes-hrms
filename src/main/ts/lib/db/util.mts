@@ -69,3 +69,8 @@ export const isValidRoleTitle = (title: string): boolean | string =>
 
     return true;
 }
+
+export const roleTitleWithDepartmentIdExists = async (title: string, id: number): Promise<boolean> =>
+{
+    return ((await connection.execute("SELECT EXISTS(SELECT NULL FROM role WHERE title = ? AND department_id = ?) AS doesExist;", [title, id]))[0] as [{doesExist: number}])[0].doesExist === 1;
+};
