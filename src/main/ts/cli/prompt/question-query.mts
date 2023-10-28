@@ -1,5 +1,5 @@
 /**
- * @module query-question
+ * @module question-query
  */
 
 import { queryChoice } from "./query-choice.mjs";
