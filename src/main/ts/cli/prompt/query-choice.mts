@@ -18,6 +18,11 @@ export const viewEmployees = Object.freeze({
     value: QueryChoiceString.VIEW_EMPLOYEES
 });
 
+export const addEmployee = Object.freeze({
+    name: QueryChoiceString.ADD_EMPLOYEE,
+    value: QueryChoiceString.ADD_EMPLOYEE
+});
+
 export const viewRoles = Object.freeze({
     name: QueryChoiceString.VIEW_ROLES,
     value: QueryChoiceString.VIEW_ROLES
@@ -45,9 +50,12 @@ export const quit = Object.freeze({
 
 export const queryChoice = Object.freeze({
     viewEmployees,
+    addEmployee,
     viewRoles,
     addRole,
     viewDepartments,
     addDepartment,
     quit
 });
+
+export default queryChoice;
