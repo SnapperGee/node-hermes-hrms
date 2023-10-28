@@ -52,7 +52,7 @@ promptLoop: do
             const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
             const {roleId, roleTitle, roleDepartment} = answers.roleOfEmployeeToAdd;
             const {managerId, managerName} = answers.managerOfEmployeeToAdd;
-            console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartment.name}" department and manager "${managerName}".\n`);
+            console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartment.name}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
             break;
         case QueryChoiceString.VIEW_ROLES:
             const departmentsForRoles: Department[] = await readDepartments();

@@ -46,7 +46,7 @@ export const addEmployeeManagerQuestion: Question = Object.freeze({
     type: "list",
     name: "managerOfEmployeeToAdd",
     message: "Who is the employee's manager?",
-    choices: async () => (await readEmployeesView()).map(({id, firstName, lastName}) => ({name: `${firstName} ${lastName}`, value: {managerId: id, managerName: `${firstName} ${lastName}`}})),
+    choices: async () => [{name: "None", value: {managerId: null, managerName: null}}, ...(await readEmployeesView()).map(({id, firstName, lastName}) => ({name: `${firstName} ${lastName}`, value: {managerId: id, managerName: `${firstName} ${lastName}`}}))],
     when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoiceString.ADD_EMPLOYEE),
     prefix: PREFIX,
     suffix: SUFFIX
