@@ -12,6 +12,7 @@ export const queryQuestion: Readonly<Question> = Object.freeze({
     message: "How would you like to query the database?",
     choices: [
         queryChoice.viewEmployees,
+        queryChoice.addEmployee,
         queryChoice.viewRoles,
         queryChoice.addRole,
         queryChoice.viewDepartments,
