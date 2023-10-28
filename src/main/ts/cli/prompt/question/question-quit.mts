@@ -10,7 +10,7 @@ export const quitQuestion: Question = {
     type: "confirm",
     name: "quit",
     message: "Are you sure you want to quit?",
-    when: (answers: Answers) => Promise.resolve(answers.initResponse === QueryChoiceString.QUIT),
+    when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoiceString.QUIT),
     prefix: PREFIX,
     suffix: SUFFIX
 };

@@ -20,7 +20,7 @@ promptLoop: do
 {
     const answers: Answers = await inquirer.prompt([queryQuestion, roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion, quitQuestion]);
 
-    switch (answers.initResponse)
+    switch (answers.queryChoice)
     {
         case QueryChoiceString.QUIT:
             if (answers.quit === true)
@@ -68,7 +68,7 @@ promptLoop: do
             console.log(`Added "${departmentToAdd}" department`);
             break;
         default:
-            throw new Error(`Unrecognized answer init string response: "${answers.initResponse}"`);
+            throw new Error(`Unrecognized answer init string response: "${answers.queryChoice}"`);
     }
 }
 while (true)
