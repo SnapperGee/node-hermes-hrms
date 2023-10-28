@@ -2,8 +2,9 @@
  * @module hermes
  */
 
+import { queryQuestion, quitQuestion, roleTitleQuestion, roleSalaryQuestion,
+         roleDepartmentQuestion, addDepartmentQuestion } from "./cli/prompt/question/index.mjs";
 import { QueryChoiceString } from "./cli/prompt/query-choice.mjs";
-import { quitQuestion } from "./cli/prompt/question/question-quit.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
 import { Role } from "./lib/role.mjs";
@@ -11,8 +12,6 @@ import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
 import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
-import { queryQuestion } from "./cli/prompt/question/question-query.mjs";
-import { roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { createRole } from "./lib/db/create/create-role.mjs";
