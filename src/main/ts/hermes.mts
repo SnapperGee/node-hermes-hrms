@@ -15,6 +15,7 @@ import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { createRole } from "./lib/db/create/create-role.mjs";
+import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 
 promptLoop: do
 {
@@ -53,8 +54,15 @@ promptLoop: do
             const title = answers.titleOfRoleToAdd;
             const salary = answers.salaryOfRoleToAdd;
             const {departmentId, departmentName} = answers.departmentOfRoleToAdd;
+
+            if (await roleTitleWithDepartmentIdExists(title, departmentId))
+            {
+                console.log(`\n"${title}" role already exists for "${departmentName}" department.\n`);
+                continue promptLoop;
+            }
+
             await createRole(title, salary, departmentId);
-            console.log(`Added "${title}" role of "${departmentName}" department with salary $${salary}`);
+            console.log(`\nAdded "${title}" role of "${departmentName}" department with salary $${salary}.\n`);
             break;
         case QueryChoiceString.VIEW_DEPARTMENTS:
             const departments: Department[] = await readDepartments();
@@ -64,7 +72,7 @@ promptLoop: do
         case QueryChoiceString.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
             await createDepartment(departmentToAdd);
-            console.log(`Added "${departmentToAdd}" department`);
+            console.log(`\nAdded "${departmentToAdd}" department.\n`);
             break;
         default:
             throw new Error(`Unrecognized answer init string response: "${answers.queryChoice}"`);
