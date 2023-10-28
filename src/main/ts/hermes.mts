@@ -12,15 +12,14 @@ import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs
 import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
 import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { queryQuestion } from "./cli/prompt/query-question.mjs";
-import { addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
+import { roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion } from "./cli/prompt/question/question-add.mjs";
 import { createDepartment } from "./lib/db/create/create-department.mjs";
-import { rolePrompt } from "./cli/prompt/role-prompt.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { createRole } from "./lib/db/create/create-role.mjs";
 
 promptLoop: do
 {
-    const answers: Answers = await inquirer.prompt([queryQuestion, addDepartmentQuestion, quitQuestion]);
+    const answers: Answers = await inquirer.prompt([queryQuestion, roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion, quitQuestion]);
 
     switch (answers.initResponse)
     {
@@ -43,6 +42,8 @@ promptLoop: do
         // Prompt employees last name input
         // Prompt employees role list
         // Prompt employees manage list
+        case QueryChoiceString.ADD_EMPLOYEE:
+            break;
         case QueryChoiceString.VIEW_ROLES:
             const departmentsForRoles: Department[] = await readDepartments();
             const roles: Role[] = await readRoles(departmentsForRoles);
@@ -50,7 +51,11 @@ promptLoop: do
             console.log(rolesStringGrid)
             break;
         case QueryChoiceString.ADD_ROLE:
-            const {title, salary, departmentId} = await rolePrompt();
+            // const {title, salary, departmentId} = await rolePrompt();
+            const title = answers.titleOfRoleToAdd;
+            const salary = answers.salaryOfRoleToAdd;
+            const {departmentId, departmentName} = answers.departmentOfRoleToAdd;
+            console.log(`Added "${title}" role of "${departmentName}" department with salary $${salary}`);
             await createRole(title, salary, departmentId);
             break;
         case QueryChoiceString.VIEW_DEPARTMENTS:
