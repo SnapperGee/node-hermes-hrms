@@ -3,10 +3,54 @@
  */
 
 import { QueryChoiceString } from "../query-choice.mjs";
-import { formatInsertData, isValidDepartmentName, isValidRoleTitle, isValidSalary } from "../../../lib/db/util.mjs";
-import { readDepartments } from "../../../lib/db/read.mjs";
+import { formatInsertData, isValidDepartmentName, isValidName, isValidRoleTitle, isValidSalary } from "../../../lib/db/util.mjs";
+import { readDepartments, readEmployeesView, readRoles } from "../../../lib/db/read.mjs";
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Answers, type Question } from "inquirer";
+
+export const addEmployeeFirstNameQuestion: Question = {
+    type: "input",
+    name: "firstNameOfEmployeeToAdd",
+    message: "What is the employee's first name?",
+    filter: (input: string) => Promise.resolve(formatInsertData(input)),
+    validate: (input: string) => Promise.resolve(isValidName(input)),
+    when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoiceString.ADD_EMPLOYEE),
+    default: "",
+    prefix: PREFIX,
+    suffix: SUFFIX
+};
+
+export const addEmployeeLastNameQuestion: Question = {
+    type: "input",
+    name: "lastNameOfEmployeeToAdd",
+    message: "What is the employee's last name?",
+    filter: (input: string) => Promise.resolve(formatInsertData(input)),
+    validate: (input: string) => Promise.resolve(isValidName(input)),
+    when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoiceString.ADD_EMPLOYEE),
+    default: "",
+    prefix: PREFIX,
+    suffix: SUFFIX
+};
+
+export const addEmployeeRoleQuestion: Question = Object.freeze({
+    type: "list",
+    name: "roleOfEmployeeToAdd",
+    message: "What is the employee's role?",
+    choices: async () => (await readRoles(await readDepartments())).map(({id, title, department}) => ({name: title, value: {roleId: id, roleTitle: title, roleDepartment: department}})),
+    when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoiceString.ADD_EMPLOYEE),
+    prefix: PREFIX,
+    suffix: SUFFIX
+});
+
+export const addEmployeeManagerQuestion: Question = Object.freeze({
+    type: "list",
+    name: "managerOfEmployeeToAdd",
+    message: "Who is the employee's manager?",
+    choices: async () => (await readEmployeesView()).map(({id, firstName, lastName}) => ({name: `${firstName} ${lastName}`, value: {managerId: id, managerName: `${firstName} ${lastName}`}})),
+    when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoiceString.ADD_EMPLOYEE),
+    prefix: PREFIX,
+    suffix: SUFFIX
+});
 
 export const addDepartmentQuestion: Question = {
     type: "input",

@@ -3,7 +3,8 @@
  */
 
 import { queryQuestion, quitQuestion, roleTitleQuestion, roleSalaryQuestion,
-         roleDepartmentQuestion, addDepartmentQuestion } from "./cli/prompt/question/index.mjs";
+         roleDepartmentQuestion, addDepartmentQuestion, addEmployeeFirstNameQuestion,
+         addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion} from "./cli/prompt/question/index.mjs";
 import { QueryChoiceString } from "./cli/prompt/query-choice.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
@@ -19,7 +20,11 @@ import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 
 promptLoop: do
 {
-    const answers: Answers = await inquirer.prompt([queryQuestion, roleTitleQuestion, roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion, quitQuestion]);
+    const answers: Answers = await inquirer.prompt([
+        queryQuestion, addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion,
+        addEmployeeRoleQuestion, addEmployeeManagerQuestion, roleTitleQuestion,
+        roleSalaryQuestion, roleDepartmentQuestion, addDepartmentQuestion, quitQuestion
+    ]);
 
     switch (answers.queryChoice)
     {
@@ -43,6 +48,11 @@ promptLoop: do
         // Prompt employees role list
         // Prompt employees manage list
         case QueryChoiceString.ADD_EMPLOYEE:
+            const newEmployeeFirstName = answers.firstNameOfEmployeeToAdd;
+            const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
+            const {roleId, roleTitle, roleDepartment} = answers.roleOfEmployeeToAdd;
+            const {managerId, managerName} = answers.managerOfEmployeeToAdd;
+            console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartment.name}" department and manager "${managerName}".\n`);
             break;
         case QueryChoiceString.VIEW_ROLES:
             const departmentsForRoles: Department[] = await readDepartments();

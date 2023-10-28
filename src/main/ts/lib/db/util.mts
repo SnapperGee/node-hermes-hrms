@@ -8,6 +8,16 @@ const whiteSpaceRegex: RegExp = /\s+/g;
 
 export const formatInsertData = (dataToBeInserted: string): string => dataToBeInserted.trim().replaceAll(whiteSpaceRegex, "\u0020");
 
+export const isValidName = (name: string): boolean | string =>
+{
+    if (name.length === 0)
+    {
+        return "Name cannot be blank";
+    }
+
+    return true;
+};
+
 export const departmentNameExists = async (name: string): Promise<boolean> =>
 {
     return ((await connection.execute("SELECT EXISTS(SELECT NULL FROM department WHERE name = ?) AS doesExist;", [name]))[0] as [{doesExist: number}])[0].doesExist === 1;
