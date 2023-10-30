@@ -5,7 +5,7 @@
 import { queryQuestion, quitQuestion, addRoleTitleQuestion, addRoleSalaryQuestion,
          addRoleDepartmentQuestion, addDepartmentQuestion, addEmployeeFirstNameQuestion,
          addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
-import { QueryChoiceString } from "./cli/prompt/query-choice.mjs";
+import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
 import { Role } from "./lib/role.mjs";
@@ -27,7 +27,7 @@ promptLoop: do
 
     switch (answers.queryChoice)
     {
-        case QueryChoiceString.QUIT:
+        case QueryChoice.QUIT:
             if (answers.quit === true)
             {
                 break promptLoop;
@@ -36,12 +36,12 @@ promptLoop: do
             {
                 continue promptLoop;
             }
-        case QueryChoiceString.VIEW_EMPLOYEES:
+        case QueryChoice.VIEW_EMPLOYEES:
             const employees: EmployeeWithManagerName[] = await readEmployeesView();
             const employeesStringGrid: string = employeesToStringGrid(employees);
             console.log(employeesStringGrid)
             break;
-        case QueryChoiceString.ADD_EMPLOYEE:
+        case QueryChoice.ADD_EMPLOYEE:
             const newEmployeeFirstName = answers.firstNameOfEmployeeToAdd;
             const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
             const {roleId, roleTitle, roleDepartment} = answers.roleOfEmployeeToAdd;
@@ -49,13 +49,13 @@ promptLoop: do
             insertEmployee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
             console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartment.name}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
             break;
-        case QueryChoiceString.VIEW_ROLES:
+        case QueryChoice.VIEW_ROLES:
             const departmentsForRoles: Department[] = await readDepartments();
             const roles: Role[] = await readRoles(departmentsForRoles);
             const rolesStringGrid: string = rolesToStringGrid(roles);
             console.log(rolesStringGrid)
             break;
-        case QueryChoiceString.ADD_ROLE:
+        case QueryChoice.ADD_ROLE:
             const title = answers.titleOfRoleToAdd;
             const salary = answers.salaryOfRoleToAdd;
             const {departmentId, departmentName} = answers.departmentOfRoleToAdd;
@@ -69,12 +69,12 @@ promptLoop: do
             await insertRole(title, salary, departmentId);
             console.log(`\nAdded "${title}" role of "${departmentName}" department with salary $${salary}.\n`);
             break;
-        case QueryChoiceString.VIEW_DEPARTMENTS:
+        case QueryChoice.VIEW_DEPARTMENTS:
             const departments: Department[] = await readDepartments();
             const departmentsStringGrid: string = departmentsToStringGrid(departments);
             console.log(departmentsStringGrid)
             break;
-        case QueryChoiceString.ADD_DEPARTMENT:
+        case QueryChoice.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
             await insertDepartment(departmentToAdd);
             console.log(`\nAdded "${departmentToAdd}" department.\n`);
