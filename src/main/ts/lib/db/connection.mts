@@ -10,7 +10,7 @@ import { Connection, createConnection } from "mysql2/promise";
  */
 export const connection: Readonly<Connection> = Object.freeze( await createConnection({
     host: process.env.HOST,
-    user: process.env.USER,
+    user: process.env.DB_USER,
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     port: parseFloat(process.env.PORT ?? "3306"),
