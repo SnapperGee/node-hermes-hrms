@@ -6,6 +6,9 @@ import { QueryChoice } from "../query-choice.mjs";
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Answers, type Question } from "inquirer";
 
+/**
+ * The Inquirer {@link Question} confirming to quit application.
+ */
 export const quitQuestion: Question = {
     type: "confirm",
     name: "quit",

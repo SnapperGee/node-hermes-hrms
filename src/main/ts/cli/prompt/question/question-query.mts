@@ -6,6 +6,9 @@ import { queryChoices } from "../query-choice.mjs";
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Question } from "inquirer";
 
+/**
+ * The initial Inquirer {@link Question} for querying the database or quitting.
+ */
 export const queryQuestion: Readonly<Question> = Object.freeze({
     name: "queryChoice",
     type: "list",

@@ -31,7 +31,7 @@ export const addEmployeeFirstNameQuestion: Question = {
 /**
  * Inquirer {@link Question} for adding an employee's last name. Validation is
  * performed to make sure the name is not blank. All leading and trailing
- * whitespace is removed and all internal whitespace is replaced with single
+ * whitespace is removed and all internal whitespaces are replaced with single
  * spaces.
  *
  * @see {@link isValidName}
@@ -77,7 +77,10 @@ export const addEmployeeManagerQuestion: Question = Object.freeze({
 });
 
 /**
- * Inquirer {@link Question} for adding a department.
+ * Inquirer {@link Question} for adding a department. Validation is performed
+ * to make sure the department name is not blank. All leading and trailing
+ * whitespaces are removed and all internal whitespaces are replaced with single
+ * spaces.
  */
 export const addDepartmentQuestion: Question = {
     type: "input",
@@ -91,6 +94,12 @@ export const addDepartmentQuestion: Question = {
     suffix: SUFFIX
 };
 
+/**
+ * Inquirer {@link Question} for adding a role title. Validation is performed
+ * to make sure the role title is not blank. All leading and trailing
+ * whitespaces are removed and all internal whitespaces are replaced with single
+ * spaces.
+ */
 export const addRoleTitleQuestion: Question = Object.freeze({
     type: "input",
     name: "titleOfRoleToAdd",
@@ -103,6 +112,10 @@ export const addRoleTitleQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
+/**
+ * Inquirer {@link Question} for adding a salary. Validation is performed
+ * to make sure the salary is a floating point number.
+ */
 export const addRoleSalaryQuestion: Question = Object.freeze({
     type: "input",
     name: "salaryOfRoleToAdd",
@@ -115,6 +128,10 @@ export const addRoleSalaryQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
+/**
+ * Inquirer {@link Question} for adding a role department. The choices are
+ * obtained from the pre-existing departments in the database.
+ */
 export const addRoleDepartmentQuestion: Question = Object.freeze({
     type: "list",
     name: "departmentOfRoleToAdd",
@@ -125,6 +142,9 @@ export const addRoleDepartmentQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
+/**
+ * Object containing all the add questions.
+ */
 export const add = Object.freeze({
     departmentQuestion: addDepartmentQuestion,
     employeeFirstNameQuestion: addEmployeeFirstNameQuestion,

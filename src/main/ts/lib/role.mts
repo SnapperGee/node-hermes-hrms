@@ -1,6 +1,9 @@
 import { type Department } from "./department.mjs";
 import { inspect } from "node:util";
 
+/**
+ * CLass representing a role.
+ */
 export class Role
 {
     readonly #id: number;
@@ -47,11 +50,33 @@ export class Role
         }
     }
 
+    /**
+     * Returns the ID `number`  of the role.
+     */
     public get id(): number { return this.#id; }
+
+    /**
+     * Returns the title `string` of the role.
+     */
     public get title(): string { return this.#title; }
+
+    /**
+     * Returns the salary `number` of the role.
+     */
     public get salary(): number { return this.#salary; }
+
+    /**
+     * Returns the {@link Department} role belongs to.
+     */
     public get department(): Department { return this.#department; }
 
+    /**
+     * Checks if the passed argument is equal to this role object.
+     *
+     * @param obj The object being checked for equality.
+     *
+     * @returns `true` if the passed object is equal to this role object.
+     */
     public equals(obj: unknown): boolean
     {
         return obj instanceof Role
@@ -61,8 +86,16 @@ export class Role
             && obj.#department.equals(this.#department);
     }
 
+    /**
+     * Returns a `string` representation of the role.
+     * @returns a `string` representation of the role.
+     */
     public toString(): string { return this.#string; }
-    // public get [Symbol.toStringTag](): string { return this.#string; }
+
+    /**
+     * Returns a `string` representation of the role.
+     * @returns a `string` representation of the role.
+     */
     public [inspect.custom](): string { return this.#string; }
 }
 
