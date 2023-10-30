@@ -19,6 +19,8 @@ import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 
 promptLoop: do
 {
+    // The initial prompts and their answers from the user of how they want to
+    // query the database or quit the application.
     const answers: Answers = await inquirer.prompt([
         queryQuestion, addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion,
         addEmployeeRoleQuestion, addEmployeeManagerQuestion, addRoleTitleQuestion,
@@ -27,11 +29,14 @@ promptLoop: do
 
     switch (answers.queryChoice)
     {
+        // If user chooses quit...
         case QueryChoice.QUIT:
+            // If user confirms quit break prompt loop
             if (answers.quit === true)
             {
                 break promptLoop;
             }
+            // If user cancels quit continue prompt loop
             else
             {
                 continue promptLoop;
@@ -41,6 +46,8 @@ promptLoop: do
             const employeesStringGrid: string = employeesToStringGrid(employees);
             console.log(employeesStringGrid)
             break;
+        // Validation for the inputted employee names is performed in the
+        // Inquirer questions.
         case QueryChoice.ADD_EMPLOYEE:
             const newEmployeeFirstName = answers.firstNameOfEmployeeToAdd;
             const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
@@ -55,11 +62,15 @@ promptLoop: do
             const rolesStringGrid: string = rolesToStringGrid(roles);
             console.log(rolesStringGrid)
             break;
+        // Validation for the inputted role title is performed in the Inquirer
+        // questions in addition to the validation below to make sure a
+        // duplicate role title isn't added to the same department.
         case QueryChoice.ADD_ROLE:
             const title = answers.titleOfRoleToAdd;
             const salary = answers.salaryOfRoleToAdd;
             const {departmentId, departmentName} = answers.departmentOfRoleToAdd;
 
+            // Make sure that role title doesn't already exist for department
             if (await roleTitleWithDepartmentIdExists(title, departmentId))
             {
                 console.log(`\n"${title}" role already exists for "${departmentName}" department.\n`);
@@ -74,6 +85,8 @@ promptLoop: do
             const departmentsStringGrid: string = departmentsToStringGrid(departments);
             console.log(departmentsStringGrid)
             break;
+        // Validation for the inputted department names is performed in the
+        // Inquirer question.
         case QueryChoice.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
             await insertDepartment(departmentToAdd);
@@ -86,4 +99,3 @@ promptLoop: do
 while (true)
 
 console.log("Exiting hermes...");
-process.exit();

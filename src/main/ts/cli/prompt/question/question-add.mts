@@ -8,6 +8,14 @@ import { readDepartments, readEmployeesView, readRoles } from "../../../lib/db/r
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Answers, type Question } from "inquirer";
 
+/**
+ * Inquirer {@link Question} for adding an employee's first name. Validation is
+ * performed to make sure the name is not blank. All leading and trailing
+ * whitespace is removed and all internal whitespace is replaced with single
+ * spaces.
+ *
+ * @see {@link isValidName}
+ */
 export const addEmployeeFirstNameQuestion: Question = {
     type: "input",
     name: "firstNameOfEmployeeToAdd",
@@ -20,6 +28,14 @@ export const addEmployeeFirstNameQuestion: Question = {
     suffix: SUFFIX
 };
 
+/**
+ * Inquirer {@link Question} for adding an employee's last name. Validation is
+ * performed to make sure the name is not blank. All leading and trailing
+ * whitespace is removed and all internal whitespace is replaced with single
+ * spaces.
+ *
+ * @see {@link isValidName}
+ */
 export const addEmployeeLastNameQuestion: Question = {
     type: "input",
     name: "lastNameOfEmployeeToAdd",
@@ -32,6 +48,10 @@ export const addEmployeeLastNameQuestion: Question = {
     suffix: SUFFIX
 };
 
+/**
+ * Inquirer {@link Question} for adding an employee's role. The choices are
+ * obtained from the pre-existing roles in the database.
+ */
 export const addEmployeeRoleQuestion: Question = Object.freeze({
     type: "list",
     name: "roleOfEmployeeToAdd",
@@ -42,6 +62,10 @@ export const addEmployeeRoleQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
+/**
+ * Inquirer {@link Question} for adding an employee's manager. The choices are
+ * obtained from the pre-existing employees in the database.
+ */
 export const addEmployeeManagerQuestion: Question = Object.freeze({
     type: "list",
     name: "managerOfEmployeeToAdd",
@@ -52,6 +76,9 @@ export const addEmployeeManagerQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
+/**
+ * Inquirer {@link Question} for adding a department.
+ */
 export const addDepartmentQuestion: Question = {
     type: "input",
     name: "departmentToAdd",
