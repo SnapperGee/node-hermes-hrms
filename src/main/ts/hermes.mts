@@ -16,6 +16,7 @@ import { EmployeeWithManagerName } from "./lib/employee.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
+import { connection } from "./lib/db/connection.mjs";
 
 promptLoop: do
 {
@@ -99,3 +100,4 @@ promptLoop: do
 while (true)
 
 console.log("Exiting hermes...");
+connection.end();
