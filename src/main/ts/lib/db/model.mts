@@ -1,3 +1,7 @@
+/**
+ * @module model
+ */
+
 export interface Department
 {
     id: number;
