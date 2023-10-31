@@ -1,6 +1,5 @@
 import { type Department } from "../lib/department.mjs";
 import { type Role } from "../lib/role.mjs";
-import { EmployeeWithManagerID, type EmployeeWithManagerName } from "../lib/employee.mjs";
 
 const DELINEATOR: string = " | ";
 
