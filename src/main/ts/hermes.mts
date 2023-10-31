@@ -2,17 +2,16 @@
  * @module hermes
  */
 
-import { queryQuestion, quitQuestion, addRoleTitleQuestion, addRoleSalaryQuestion,
-         addRoleDepartmentQuestion, addDepartmentQuestion, addEmployeeFirstNameQuestion,
-         addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
+import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, addRoleTitleQuestion,
+         addRoleSalaryQuestion, addRoleDepartmentQuestion, addDepartmentQuestion,
+         addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion, addEmployeeRoleQuestion,
+         addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
 import { Role } from "./lib/role.mjs";
 import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
-import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
-import { employeesToStringGrid } from "./cli/table-grid-string.mjs";
-import { EmployeeWithManagerName } from "./lib/employee.mjs";
+import { readDepartments, readEmployeesView, readEmployeeTableFilterByManager, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
@@ -23,9 +22,10 @@ promptLoop: do
     // The initial prompts and their answers from the user of how they want to
     // query the database or quit the application.
     const answers: Answers = await inquirer.prompt([
-        queryQuestion, addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion,
-        addEmployeeRoleQuestion, addEmployeeManagerQuestion, addRoleTitleQuestion,
-        addRoleSalaryQuestion, addRoleDepartmentQuestion, addDepartmentQuestion, quitQuestion
+        queryQuestion, viewEmployeesByManagerQuestion, addEmployeeFirstNameQuestion,
+        addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion,
+        addRoleTitleQuestion, addRoleSalaryQuestion, addRoleDepartmentQuestion,
+        addDepartmentQuestion, quitQuestion
     ]);
 
     switch (answers.queryChoice)
@@ -43,9 +43,15 @@ promptLoop: do
                 continue promptLoop;
             }
         case QueryChoice.VIEW_EMPLOYEES:
-            const employees: EmployeeWithManagerName[] = await readEmployeesView();
-            const employeesStringGrid: string = employeesToStringGrid(employees);
-            console.log(employeesStringGrid)
+            const employees = await readEmployeesView();
+            console.table(employees);
+            break;
+        case QueryChoice.VIEW_EMPLOYEES_BY_MANAGER:
+            const manager: {id: number, name: string} = answers.managerToViewEmployeesOf;
+            const departmentsForManagerRoles: Department[] = await readDepartments();
+            const rolesForEmployeesFilteredByManager: Role[] = await readRoles(departmentsForManagerRoles);
+            const employeesFilteredByManager = await readEmployeeTableFilterByManager(rolesForEmployeesFilteredByManager, manager.id);
+            console.log(manager);
             break;
         // Validation for the inputted employee names is performed in the
         // Inquirer questions.
@@ -61,7 +67,7 @@ promptLoop: do
             const departmentsForRoles: Department[] = await readDepartments();
             const roles: Role[] = await readRoles(departmentsForRoles);
             const rolesStringGrid: string = rolesToStringGrid(roles);
-            console.log(rolesStringGrid)
+            console.log(rolesStringGrid);
             break;
         // Validation for the inputted role title is performed in the Inquirer
         // questions in addition to the validation below to make sure a
@@ -84,7 +90,7 @@ promptLoop: do
         case QueryChoice.VIEW_DEPARTMENTS:
             const departments: Department[] = await readDepartments();
             const departmentsStringGrid: string = departmentsToStringGrid(departments);
-            console.log(departmentsStringGrid)
+            console.log(departmentsStringGrid);
             break;
         // Validation for the inputted department names is performed in the
         // Inquirer question.
