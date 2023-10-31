@@ -9,7 +9,18 @@ interface SimplifiedRoleType
     department: string
 };
 
-export class Employee<RoleType extends Role | SimplifiedRoleType,  ManagerType extends number | string>
+export interface EmployeeVerbose
+{
+    id: number;
+    first_name: string;
+    last_name: string;
+    title: string;
+    department: string;
+    salary: number;
+    manager: string | null;
+}
+
+export class RootEmployee<RoleType extends Role | SimplifiedRoleType,  ManagerType extends number | string>
 {
     readonly #id: number;
     readonly #firstName: string;
@@ -19,8 +30,8 @@ export class Employee<RoleType extends Role | SimplifiedRoleType,  ManagerType e
     readonly #string: string;
 
     public constructor(id?: number, firstName?: string, lastName?: string, role?: RoleType, manager?: ManagerType | null);
-    public constructor(other?: Employee<RoleType, ManagerType>);
-    constructor(idOrOther?: number | Employee<RoleType, ManagerType>, firstName?: string, lastName?: string, role?: RoleType, manager?: ManagerType)
+    public constructor(other?: RootEmployee<RoleType, ManagerType>);
+    constructor(idOrOther?: number | RootEmployee<RoleType, ManagerType>, firstName?: string, lastName?: string, role?: RoleType, manager?: ManagerType)
     {
         if (typeof idOrOther === "number")
         {
@@ -70,7 +81,7 @@ export class Employee<RoleType extends Role | SimplifiedRoleType,  ManagerType e
 
     public equals(obj: unknown): boolean
     {
-        return obj instanceof Employee
+        return obj instanceof RootEmployee
             && obj.#id === this.#id
             && obj.#firstName === this.#firstName
             && obj.#lastName === this.#lastName
@@ -86,7 +97,7 @@ export class Employee<RoleType extends Role | SimplifiedRoleType,  ManagerType e
     public [inspect.custom](): string { return this.#string; }
 }
 
-export class EmployeeWithManagerID extends Employee<Role, number>
+export class EmployeeWithManagerID extends RootEmployee<Role, number>
 {
     public constructor(id: number, firstName: string, lastName: string, role: Role, managerId: number | null);
     public constructor(other: EmployeeWithManagerID);
@@ -103,7 +114,7 @@ export class EmployeeWithManagerID extends Employee<Role, number>
     }
 }
 
-export class EmployeeWithManagerName extends Employee<SimplifiedRoleType, string>
+export class EmployeeWithManagerName extends RootEmployee<SimplifiedRoleType, string>
 {
     public constructor(id: number, firstName: string, lastName: string, title: string, salary: number, department: string, managerName: string | null);
     public constructor(other: EmployeeWithManagerName);
