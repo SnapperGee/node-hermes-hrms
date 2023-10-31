@@ -113,39 +113,3 @@ export class EmployeeWithManagerID extends RootEmployee<Role, number>
         }
     }
 }
-
-export class EmployeeWithManagerName extends RootEmployee<SimplifiedRoleType, string>
-{
-    public constructor(id: number, firstName: string, lastName: string, title: string, salary: number, department: string, managerName: string | null);
-    public constructor(other: EmployeeWithManagerName);
-    constructor(idOrOther: number | EmployeeWithManagerName, firstName?: string, lastName?: string, title?: string, salary?: number, department?: string, managerName?: string | null)
-    {
-        if (typeof idOrOther === "number")
-        {
-            if (title === undefined || title === null)
-            {
-                throw new TypeError(`${new.target.name}: ${title} title`);
-            }
-
-            if (salary === undefined || salary === null)
-            {
-                throw new TypeError(`${new.target.name}: ${salary} salary`);
-            }
-
-            if (department === undefined || department === null)
-            {
-                throw new TypeError(`${new.target.name}: ${department} department`);
-            }
-
-            super(idOrOther, firstName, lastName, {title, salary, department}, managerName);
-        }
-        else
-        {
-            super(idOrOther);
-        }
-    }
-
-    public get title(): string { return this.role.title; }
-    public get department(): string { return this.role.department; }
-    public get salary(): number { return this.role.salary; }
-}
