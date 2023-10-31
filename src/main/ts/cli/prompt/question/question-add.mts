@@ -31,7 +31,7 @@ export const addEmployeeFirstNameQuestion: Question = {
 /**
  * Inquirer {@link Question} for adding an employee's last name. Validation is
  * performed to make sure the name is not blank. All leading and trailing
- * whitespace is removed and all internal whitespaces are replaced with single
+ * whitespace is removed and all internal white spaces are replaced with single
  * spaces.
  *
  * @see {@link isValidName}
@@ -79,8 +79,8 @@ export const addEmployeeManagerQuestion: Question = Object.freeze({
 /**
  * Inquirer {@link Question} for adding a department. Validation is performed
  * to make sure the department name is not blank. All leading and trailing
- * whitespaces are removed and all internal whitespaces are replaced with single
- * spaces.
+ * white spaces are removed and all internal white spaces are replaced with
+ * single spaces.
  */
 export const addDepartmentQuestion: Question = {
     type: "input",
@@ -97,8 +97,8 @@ export const addDepartmentQuestion: Question = {
 /**
  * Inquirer {@link Question} for adding a role title. Validation is performed
  * to make sure the role title is not blank. All leading and trailing
- * whitespaces are removed and all internal whitespaces are replaced with single
- * spaces.
+ * white spaces are removed and all internal white spaces are replaced with
+ * single spaces.
  */
 export const addRoleTitleQuestion: Question = Object.freeze({
     type: "input",
