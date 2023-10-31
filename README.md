@@ -5,6 +5,8 @@ information for employees, roles, and departments.
 
 ## Usage
 
+A demo video showing the application in action can be found -> [HERE](https://drive.google.com/file/d/1KO3tfGM4iwMAYeCR8bAmiTNO4VSLDN2O/view?usp=drive_link) <- and down below examples of its usage are shown.
+
 After initializing this application via the npm start command, the options to view or add employees, roles, or
 departments will be available:
 
