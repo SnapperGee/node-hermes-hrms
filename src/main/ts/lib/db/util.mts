@@ -127,7 +127,7 @@ export const isValidRoleTitle = (title: string): boolean | string =>
 {
     if (title.length === 0)
     {
-        return "Role name cannot be blank";
+        return "Role title cannot be blank";
     }
 
     return true;
