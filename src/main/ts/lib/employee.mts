@@ -9,7 +9,7 @@ interface SimplifiedRoleType
     department: string
 };
 
-export interface EmployeeVerbose
+export interface EmployeeView
 {
     id: number;
     first_name: string;

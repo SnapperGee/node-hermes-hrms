@@ -4,7 +4,7 @@
 
 import { Role } from "../role.mjs";
 import { Department } from "../department.mjs";
-import { EmployeeWithManagerID, type EmployeeVerbose } from "../employee.mjs";
+import { EmployeeWithManagerID, type EmployeeView } from "../employee.mjs";
 import { connection } from "./connection.mjs";
 
 export const readEmployeeTableFilterByManager = async (roles: Role[], managerId: number): Promise<EmployeeWithManagerID[]> => Promise.all(((await connection.execute("SELECT * FROM employee WHERE manager_id = ?;", [managerId]))[0] as {id: number, first_name: string, last_name: string, role_id: number, manager_id: number}[])
@@ -28,7 +28,7 @@ export const readEmployeeTableFilterByManager = async (roles: Role[], managerId:
  * @returns An array of (@link EmployeeWithManagerName}s with properties populated
  *          from the database.
  */
-export const readEmployeesView = async (): Promise<EmployeeVerbose[]> => Promise.all(((await connection.execute("SELECT * FROM employees_view;"))[0] as EmployeeVerbose[]));
+export const readEmployeesView = async (): Promise<EmployeeView[]> => Promise.all(((await connection.execute("SELECT * FROM employees_view;"))[0] as EmployeeView[]));
 
 /**
  * Returns an array of (@link Role}s with properties populated from the database.
