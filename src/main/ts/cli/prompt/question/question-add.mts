@@ -4,7 +4,7 @@
 
 import { QueryChoice } from "../query-choice.mjs";
 import { formatInsertData, isValidDepartmentName, isValidName, isValidRoleTitle, isValidSalary } from "../../../lib/db/util.mjs";
-import { readDepartments, readEmployeesView, readRoles } from "../../../lib/db/read.mjs";
+import { readDepartments, readEmployees, readRoles } from "../../../lib/db/read.mjs";
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Answers, type Question } from "inquirer";
 
@@ -70,7 +70,7 @@ export const addEmployeeManagerQuestion: Question = Object.freeze({
     type: "list",
     name: "managerOfEmployeeToAdd",
     message: "Who is the employee's manager?",
-    choices: async () => [{name: "None", value: {managerId: null, managerName: null}}, ...(await readEmployeesView()).map(({id, first_name, last_name}) => ({name: `${first_name} ${last_name}`, value: {managerId: id, managerName: `${first_name} ${last_name}`}}))],
+    choices: async () => [{name: "None", value: {managerId: null, managerName: null}}, ...(await readEmployees()).map(({id, first_name, last_name}) => ({name: `${first_name} ${last_name}`, value: {managerId: id, managerName: `${first_name} ${last_name}`}}))],
     when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoice.ADD_EMPLOYEE),
     prefix: PREFIX,
     suffix: SUFFIX

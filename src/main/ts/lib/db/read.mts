@@ -14,8 +14,14 @@ import { connection } from "./connection.mjs";
  * @returns An array of (@link EmployeeWithManagerName}s with properties populated
  *          from the database.
  */
-export const readEmployeesView = async (): Promise<Employee[]> =>
+export const readEmployees = async (): Promise<Employee[]> =>
     (await connection.execute("SELECT id, first_name, last_name, title, department, salary FROM employees_view;"))[0] as Employee[];
+
+export const readEmployeesWithManagerId = async (managerId: number): Promise<Employee[]> =>
+    (await connection.execute("SELECT id, first_name, last_name, title, department, salary FROM employees_view WHERE manager_id = ?;", [managerId]))[0] as Employee[];
+
+export const readEmployeesWithDepartmentId = async (departmentId: number): Promise<Employee[]> =>
+    (await connection.execute("SELECT id, first_name, last_name, title, department, salary FROM employees_view WHERE department_id = ?;", [departmentId]))[0] as Employee[];
 
 /**
  * Returns an array of (@link Role}s with properties populated from the database.
@@ -36,6 +42,3 @@ export const readDepartments = async (): Promise<Department[]> =>
 
 export const readManagersView = async (): Promise<{id: number, name: string}[]> =>
     (await connection.execute("SELECT * FROM managers_view;"))[0] as {id: number, name: string}[];
-
-export const readEmployeesWithManagerIdView = async (managerId: number): Promise<Employee[]> =>
-    (await connection.execute("SELECT id, first_name, last_name, title, department, salary FROM employees_view WHERE manager_id = ?;", [managerId]))[0] as Employee[];

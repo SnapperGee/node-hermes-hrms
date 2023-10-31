@@ -2,12 +2,12 @@
  * @module hermes
  */
 
-import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, addRoleTitleQuestion,
-         addRoleSalaryQuestion, addRoleDepartmentQuestion, addDepartmentQuestion,
+import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, viewEmployeesByDepartmentQuestion,
+         addRoleTitleQuestion, addRoleSalaryQuestion, addRoleDepartmentQuestion, addDepartmentQuestion,
          addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion, addEmployeeRoleQuestion,
          addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
-import { readDepartments, readEmployeesView, readEmployeesWithManagerIdView, readRoles } from "./lib/db/read.mjs";
+import { readDepartments, readEmployees, readEmployeesWithManagerId, readEmployeesWithDepartmentId, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
@@ -18,10 +18,10 @@ promptLoop: do
     // The initial prompts and their answers from the user of how they want to
     // query the database or quit the application.
     const answers: Answers = await inquirer.prompt([
-        queryQuestion, viewEmployeesByManagerQuestion, addEmployeeFirstNameQuestion,
-        addEmployeeLastNameQuestion, addEmployeeRoleQuestion, addEmployeeManagerQuestion,
-        addRoleTitleQuestion, addRoleSalaryQuestion, addRoleDepartmentQuestion,
-        addDepartmentQuestion, quitQuestion
+        queryQuestion, viewEmployeesByManagerQuestion, viewEmployeesByDepartmentQuestion,
+        addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion, addEmployeeRoleQuestion,
+        addEmployeeManagerQuestion, addRoleTitleQuestion, addRoleSalaryQuestion,
+        addRoleDepartmentQuestion, addDepartmentQuestion, quitQuestion
     ]);
 
     switch (answers.queryChoice)
@@ -39,13 +39,18 @@ promptLoop: do
                 continue promptLoop;
             }
         case QueryChoice.VIEW_EMPLOYEES:
-            const employees = await readEmployeesView();
+            const employees = await readEmployees();
             console.table(employees);
             break;
         case QueryChoice.VIEW_EMPLOYEES_BY_MANAGER:
-            const manager: {id: number, name: string} = answers.managerToViewEmployeesOf;
-            const employeesSelectedByManager = await readEmployeesWithManagerIdView(manager.id);
+            const managerIdOfEmployeesToView = answers.managerIdToViewEmployeesOf;
+            const employeesSelectedByManager = await readEmployeesWithManagerId(managerIdOfEmployeesToView);
             console.table(employeesSelectedByManager);
+            break;
+        case QueryChoice.VIEW_EMPLOYEES_BY_DEPARTMENT:
+            const departmentIdOfEmployeesToView = answers.departmentIdToViewEmployeesOf;
+            const employeesSelectedByDepartment = await readEmployeesWithDepartmentId(departmentIdOfEmployeesToView);
+            console.table(employeesSelectedByDepartment);
             break;
         // Validation for the inputted employee names is performed in the
         // Inquirer questions.
