@@ -7,8 +7,8 @@ information for employees, roles, and departments.
 
 A demo video showing the application in action can be found -> [HERE](https://drive.google.com/file/d/1KO3tfGM4iwMAYeCR8bAmiTNO4VSLDN2O/view?usp=drive_link) <- and down below examples of its features are shown.
 
-After initializing this application via the `npm start` command, the options to view or add employees, roles, or
-departments or to quit will be available:
+The application can be built running the `npm run build-dist` command and then run via the `npm start` command. Once the
+application is started, the options to view or add employees, roles, or departments or to quit will be available:
 
 ```text
 >>> How would you like to query the database?: (Use arrow keys)
