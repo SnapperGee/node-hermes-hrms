@@ -8,7 +8,6 @@ import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, addRoleTit
          addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { Department } from "./lib/department.mjs";
-import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
 import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
@@ -82,8 +81,7 @@ promptLoop: do
             break;
         case QueryChoice.VIEW_DEPARTMENTS:
             const departments: Department[] = await readDepartments();
-            const departmentsStringGrid: string = departmentsToStringGrid(departments);
-            console.log(departmentsStringGrid);
+            console.table(departments);
             break;
         // Validation for the inputted department names is performed in the
         // Inquirer question.
