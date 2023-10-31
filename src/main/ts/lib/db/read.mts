@@ -2,7 +2,7 @@
  * @module read
  */
 
-import { Role } from "../role.mjs";
+import { type Role } from "../role.mjs";
 import { Department } from "../department.mjs";
 import { type Employee } from "../employee.mjs";
 import { connection } from "./connection.mjs";
@@ -23,19 +23,7 @@ export const readEmployeesView = async (): Promise<Employee[]> => Promise.all(((
  *
  * @returns An array of (@link Role}s with properties populated from the database.
  */
-export const readRoles = async (departments: Department[]): Promise<Role[]> => ((await connection.execute("SELECT * FROM role;"))[0] as {id: number, title: string, salary: number, department_id: number}[])
-    .map(({id, title, salary, department_id}) =>
-    {
-        const department = departments.find(department => department.id === department_id);
-
-        if (department === undefined)
-        {
-            throw new Error(`${readRoles.name}: no department with id ${department_id}`);
-        }
-
-        return new Role(id, title, salary, department);
-    }
-);
+export const readRoles = async (): Promise<Role[]> => ((await connection.execute("SELECT * FROM roles_view;"))[0] as Role[]);
 
 /**
  * Returns an array of (@link Department}s with properties populated from the database.

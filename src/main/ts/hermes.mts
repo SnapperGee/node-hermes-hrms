@@ -9,8 +9,6 @@ import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, addRoleTit
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
-import { Role } from "./lib/role.mjs";
-import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
 import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
@@ -55,16 +53,14 @@ promptLoop: do
         case QueryChoice.ADD_EMPLOYEE:
             const newEmployeeFirstName = answers.firstNameOfEmployeeToAdd;
             const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
-            const {roleId, roleTitle, roleDepartment} = answers.roleOfEmployeeToAdd;
+            const {roleId, roleTitle, roleDepartmentName} = answers.roleOfEmployeeToAdd;
             const {managerId, managerName} = answers.managerOfEmployeeToAdd;
             insertEmployee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
-            console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartment.name}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
+            console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartmentName}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
             break;
         case QueryChoice.VIEW_ROLES:
-            const departmentsForRoles: Department[] = await readDepartments();
-            const roles: Role[] = await readRoles(departmentsForRoles);
-            const rolesStringGrid: string = rolesToStringGrid(roles);
-            console.log(rolesStringGrid);
+            const roles = await readRoles();
+            console.table(roles);
             break;
         // Validation for the inputted role title is performed in the Inquirer
         // questions in addition to the validation below to make sure a

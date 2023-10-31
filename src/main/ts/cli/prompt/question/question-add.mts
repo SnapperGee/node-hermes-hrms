@@ -56,7 +56,7 @@ export const addEmployeeRoleQuestion: Question = Object.freeze({
     type: "list",
     name: "roleOfEmployeeToAdd",
     message: "What is the employee's role?",
-    choices: async () => (await readRoles(await readDepartments())).map(({id, title, department}) => ({name: title, value: {roleId: id, roleTitle: title, roleDepartment: department}})),
+    choices: async () => (await readRoles()).map(({id, title, department_name}) => ({name: title, value: {roleId: id, roleTitle: title, roleDepartmentName: department_name}})),
     when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoice.ADD_EMPLOYEE),
     prefix: PREFIX,
     suffix: SUFFIX
