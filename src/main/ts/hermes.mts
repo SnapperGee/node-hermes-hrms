@@ -4,7 +4,7 @@
 
 import { questions } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
-import { deleteDepartment } from "./lib/db/delete.mjs";
+import { deleteRole, deleteDepartment } from "./lib/db/delete.mjs";
 import { readDepartments, readEmployees, readEmployeesWithManagerId, readEmployeesWithDepartmentId, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
@@ -76,6 +76,11 @@ promptLoop: do
 
             await insertRole(title, salary, departmentId);
             console.log(`\nAdded "${title}" role of "${departmentName}" department with salary $${salary}.\n`);
+            break;
+        case QueryChoice.DELETE_ROLE:
+            const {idOfRoleToDelete, titleOfRoleToDelete} = answers.roleToDelete;
+            await deleteRole(idOfRoleToDelete);
+            console.log(`\nDeleted "${titleOfRoleToDelete}" role.\n`);
             break;
         case QueryChoice.VIEW_DEPARTMENTS:
             const departments = await readDepartments();

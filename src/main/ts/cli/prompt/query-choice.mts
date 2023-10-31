@@ -39,6 +39,11 @@ export enum QueryChoice
     ADD_ROLE = "Add Role",
 
     /**
+     * Inquirer question choice to delete a preexisting role.
+     */
+    DELETE_ROLE = "Delete Role",
+
+    /**
      * Inquirer question choice to view all departments.
      */
     VIEW_DEPARTMENTS = "View Departments",
