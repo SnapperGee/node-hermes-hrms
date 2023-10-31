@@ -11,7 +11,7 @@ import { Department } from "./lib/department.mjs";
 import { departmentsToStringGrid } from "./cli/table-grid-string.mjs";
 import { Role } from "./lib/role.mjs";
 import { rolesToStringGrid } from "./cli/table-grid-string.mjs";
-import { readDepartments, readEmployeesView, readEmployeeTableFilterByManager, readRoles } from "./lib/db/read.mjs";
+import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
@@ -48,9 +48,6 @@ promptLoop: do
             break;
         case QueryChoice.VIEW_EMPLOYEES_BY_MANAGER:
             const manager: {id: number, name: string} = answers.managerToViewEmployeesOf;
-            const departmentsForManagerRoles: Department[] = await readDepartments();
-            const rolesForEmployeesFilteredByManager: Role[] = await readRoles(departmentsForManagerRoles);
-            const employeesFilteredByManager = await readEmployeeTableFilterByManager(rolesForEmployeesFilteredByManager, manager.id);
             console.log(manager);
             break;
         // Validation for the inputted employee names is performed in the

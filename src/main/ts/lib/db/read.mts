@@ -4,22 +4,8 @@
 
 import { Role } from "../role.mjs";
 import { Department } from "../department.mjs";
-import { EmployeeWithManagerID, type EmployeeView } from "../employee.mjs";
+import { type Employee } from "../employee.mjs";
 import { connection } from "./connection.mjs";
-
-export const readEmployeeTableFilterByManager = async (roles: Role[], managerId: number): Promise<EmployeeWithManagerID[]> => Promise.all(((await connection.execute("SELECT * FROM employee WHERE manager_id = ?;", [managerId]))[0] as {id: number, first_name: string, last_name: string, role_id: number, manager_id: number}[])
-    .map(async ({id, first_name, last_name, role_id, manager_id}) =>
-    {
-        const role = roles.find(role => role.id === role_id);
-
-        if (role === undefined)
-        {
-            throw new Error(`${readEmployeeTableFilterByManager.name}: no role with id ${role_id}`);
-        }
-
-        return new EmployeeWithManagerID(id, first_name, last_name, role, manager_id);
-    }
-));
 
 /**
  * Returns an array of (@link EmployeeWithManagerName}s with properties
@@ -28,7 +14,7 @@ export const readEmployeeTableFilterByManager = async (roles: Role[], managerId:
  * @returns An array of (@link EmployeeWithManagerName}s with properties populated
  *          from the database.
  */
-export const readEmployeesView = async (): Promise<EmployeeView[]> => Promise.all(((await connection.execute("SELECT * FROM employees_view;"))[0] as EmployeeView[]));
+export const readEmployeesView = async (): Promise<Employee[]> => Promise.all(((await connection.execute("SELECT * FROM employees_view;"))[0] as Employee[]));
 
 /**
  * Returns an array of (@link Role}s with properties populated from the database.
