@@ -2,9 +2,7 @@
  * @module read
  */
 
-import { type Role } from "../role.mjs";
-import { type Department } from "../department.mjs";
-import { type Employee } from "../employee.mjs";
+import type { Employee, Role, Department } from "../db/model.mjs";
 import { connection } from "./connection.mjs";
 
 /**
