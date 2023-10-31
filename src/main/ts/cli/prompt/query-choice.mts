@@ -47,6 +47,15 @@ export enum QueryChoice
      * Inquirer question choice to add a new department.
      */
     ADD_DEPARTMENT = "Add Department",
+
+    /**
+     * Inquirer question choice to delete a preexisting department.
+     */
+    DELETE_DEPARTMENT = "Delete Department",
+
+    /**
+     * Inquirer question choice to quit the application.
+     */
     QUIT = "Quit"
 }
 

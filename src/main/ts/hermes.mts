@@ -2,11 +2,9 @@
  * @module hermes
  */
 
-import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, viewEmployeesByDepartmentQuestion,
-         addRoleTitleQuestion, addRoleSalaryQuestion, addRoleDepartmentQuestion, addDepartmentQuestion,
-         addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion, addEmployeeRoleQuestion,
-         addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
+import { questions } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
+import { deleteDepartment } from "./lib/db/delete.mjs";
 import { readDepartments, readEmployees, readEmployeesWithManagerId, readEmployeesWithDepartmentId, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
@@ -17,12 +15,7 @@ promptLoop: do
 {
     // The initial prompts and their answers from the user of how they want to
     // query the database or quit the application.
-    const answers: Answers = await inquirer.prompt([
-        queryQuestion, viewEmployeesByManagerQuestion, viewEmployeesByDepartmentQuestion,
-        addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion, addEmployeeRoleQuestion,
-        addEmployeeManagerQuestion, addRoleTitleQuestion, addRoleSalaryQuestion,
-        addRoleDepartmentQuestion, addDepartmentQuestion, quitQuestion
-    ]);
+    const answers: Answers = await inquirer.prompt(questions);
 
     switch (answers.queryChoice)
     {
@@ -94,6 +87,11 @@ promptLoop: do
             const departmentToAdd: string = answers.departmentToAdd;
             await insertDepartment(departmentToAdd);
             console.log(`\nAdded "${departmentToAdd}" department.\n`);
+            break;
+        case QueryChoice.DELETE_DEPARTMENT:
+            const {idOfDepartmentToDelete, nameOfDepartmentToDelete} = answers.departmentToDelete;
+            await deleteDepartment(idOfDepartmentToDelete);
+            console.log(`\nDeleted "${nameOfDepartmentToDelete}" department.\n`);
             break;
         default:
             throw new Error(`Unrecognized answer init string response: "${answers.queryChoice}"`);
