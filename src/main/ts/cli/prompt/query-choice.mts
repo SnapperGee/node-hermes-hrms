@@ -14,6 +14,11 @@ export enum QueryChoice
     VIEW_EMPLOYEES = "View Employees",
 
     /**
+     * Inquirer question choice to view all employees by manager.
+     */
+    VIEW_EMPLOYEES_BY_MANAGER = "View Employees by Manager",
+
+    /**
      * Inquirer question choice to add a new employee.
      */
     ADD_EMPLOYEE = "Add Employee",

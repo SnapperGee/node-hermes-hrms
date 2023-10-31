@@ -7,8 +7,7 @@ import { queryQuestion, quitQuestion, viewEmployeesByManagerQuestion, addRoleTit
          addEmployeeFirstNameQuestion, addEmployeeLastNameQuestion, addEmployeeRoleQuestion,
          addEmployeeManagerQuestion } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
-import { Department } from "./lib/department.mjs";
-import { readDepartments, readEmployeesView, readRoles } from "./lib/db/read.mjs";
+import { readDepartments, readEmployeesView, readEmployeesWithManagerIdView, readRoles } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
@@ -45,7 +44,8 @@ promptLoop: do
             break;
         case QueryChoice.VIEW_EMPLOYEES_BY_MANAGER:
             const manager: {id: number, name: string} = answers.managerToViewEmployeesOf;
-            console.log(manager);
+            const employeesSelectedByManager = await readEmployeesWithManagerIdView(manager.id);
+            console.table(employeesSelectedByManager);
             break;
         // Validation for the inputted employee names is performed in the
         // Inquirer questions.
@@ -80,7 +80,7 @@ promptLoop: do
             console.log(`\nAdded "${title}" role of "${departmentName}" department with salary $${salary}.\n`);
             break;
         case QueryChoice.VIEW_DEPARTMENTS:
-            const departments: Department[] = await readDepartments();
+            const departments = await readDepartments();
             console.table(departments);
             break;
         // Validation for the inputted department names is performed in the
