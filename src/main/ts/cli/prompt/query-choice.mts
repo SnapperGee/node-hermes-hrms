@@ -31,7 +31,7 @@ export enum QueryChoice
     /**
      * Inquirer question choice to update/change an employee's manager.
      */
-    UPDATE_EMPLOYEE_MANAGER = "Update an Employee Manager",
+    UPDATE_EMPLOYEE_MANAGER = "Update Employee Manager",
 
     /**
      * Inquirer question choice to delete a preexisting employee.

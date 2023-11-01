@@ -7,6 +7,7 @@ import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { deleteQuery } from "./lib/db/delete.mjs";
 import { read } from "./lib/db/read.mjs";
 import { insert } from "./lib/db/insert.mjs";
+import { update } from "./lib/db/update.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 import { connection } from "./lib/db/connection.mjs";
@@ -54,6 +55,14 @@ promptLoop: do
             const {managerId, managerName} = answers.managerOfEmployeeToAdd;
             insert.employee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
             console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartmentName}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
+            break;
+        case QueryChoice.UPDATE_EMPLOYEE_MANAGER:
+            const { idOfEmployeeToUpdateManager, nameOfEmployeeToUpdateManager,
+                    roleOfEmployeeToUpdateManager, departmentOfEmployeeToUpdateManager,
+                    managerOfEmployeeToUpdateManager } = answers.employeeToUpdateManagerOf;
+            const {idOfManagerToUpdateEmployeeManager, nameOfManagerToUpdateEmployeeManager } = answers.managerToUpdateEmployeeManager;
+            update.employeeManager(idOfEmployeeToUpdateManager, idOfManagerToUpdateEmployeeManager);
+            console.log(`\nUpdated manager of "${nameOfEmployeeToUpdateManager}" with "${roleOfEmployeeToUpdateManager}" role of "${departmentOfEmployeeToUpdateManager}" department from "${managerOfEmployeeToUpdateManager}" to "${nameOfManagerToUpdateEmployeeManager}".\n`);
             break;
         case QueryChoice.DELETE_EMPLOYEE:
             const { idOfEmployeeToDelete, nameOfEmployeeToDelete,
@@ -115,5 +124,5 @@ promptLoop: do
 }
 while (true)
 
-console.log("Exiting hermes...");
+console.log("Ending connection and exiting hermes...");
 connection.end();
