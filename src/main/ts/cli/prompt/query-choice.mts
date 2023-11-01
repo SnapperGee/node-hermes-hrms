@@ -39,6 +39,11 @@ export enum QueryChoice
     VIEW_ROLES = "View Roles",
 
     /**
+     * Inquirer question choice to view the sum of all roles salaries.
+     */
+    VIEW_TOTAL_ROLES_SALARIES = "View Total Roles Salaries",
+
+    /**
      * Inquirer question choice to add a new role.
      */
     ADD_ROLE = "Add Role",

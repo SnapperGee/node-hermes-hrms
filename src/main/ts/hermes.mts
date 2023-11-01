@@ -66,6 +66,10 @@ promptLoop: do
             const roles = await read.roles();
             console.table(roles);
             break;
+        case QueryChoice.VIEW_TOTAL_ROLES_SALARIES:
+            const totalRolesSalaries = await read.totalRoleSalaries();
+            console.table(totalRolesSalaries);
+            break;
         // Validation for the inputted role title is performed in the Inquirer
         // questions in addition to the validation below to make sure a
         // duplicate role title isn't added to the same department.

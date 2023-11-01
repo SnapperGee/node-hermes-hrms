@@ -41,13 +41,17 @@ export const readDepartments = async (): Promise<Department[]> =>
 export const readManagers = async (): Promise<{id: number, name: string}[]> =>
     (await connection.execute("SELECT * FROM managers_view;"))[0] as {id: number, name: string}[];
 
+export const readTotalRoleSalaries = async (): Promise<{role: string, total: number}[]> =>
+    (await connection.execute("SELECT * FROM total_role_salary;"))[0] as {role: string, total: number}[];
+
 export const read = Object.freeze({
     employees: readEmployees,
     employeesWithManagerId: readEmployeesWithManagerId,
     employeesWithDepartmentId: readEmployeesWithDepartmentId,
     roles: readRoles,
     departments: readDepartments,
-    managers: readManagers
+    managers: readManagers,
+    totalRoleSalaries: readTotalRoleSalaries
 });
 
 export default read;
