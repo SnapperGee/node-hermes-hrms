@@ -40,3 +40,11 @@ export const insertDepartment = async (name: string): Promise<void> =>
 {
     await connection.execute("INSERT INTO department (name) VALUES (?);", [name]);
 }
+
+export const insert = Object.freeze({
+    employee: insertEmployee,
+    role: insertRole,
+    department: insertDepartment
+});
+
+export default insert;

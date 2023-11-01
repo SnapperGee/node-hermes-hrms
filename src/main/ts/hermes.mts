@@ -6,7 +6,7 @@ import { questions } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { deleteQuery } from "./lib/db/delete.mjs";
 import { read } from "./lib/db/read.mjs";
-import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
+import { insert } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
 import { connection } from "./lib/db/connection.mjs";
@@ -52,7 +52,7 @@ promptLoop: do
             const newEmployeeLastName = answers.lastNameOfEmployeeToAdd;
             const {roleId, roleTitle, roleDepartmentName} = answers.roleOfEmployeeToAdd;
             const {managerId, managerName} = answers.managerOfEmployeeToAdd;
-            insertEmployee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
+            insert.employee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
             console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartmentName}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
             break;
         case QueryChoice.DELETE_EMPLOYEE:
@@ -81,7 +81,7 @@ promptLoop: do
                 continue promptLoop;
             }
 
-            await insertRole(title, salary, departmentId);
+            await insert.role(title, salary, departmentId);
             console.log(`\nAdded "${title}" role of "${departmentName}" department with salary $${salary}.\n`);
             break;
         case QueryChoice.DELETE_ROLE:
@@ -97,7 +97,7 @@ promptLoop: do
         // Inquirer question.
         case QueryChoice.ADD_DEPARTMENT:
             const departmentToAdd: string = answers.departmentToAdd;
-            await insertDepartment(departmentToAdd);
+            await insert.department(departmentToAdd);
             console.log(`\nAdded "${departmentToAdd}" department.\n`);
             break;
         case QueryChoice.DELETE_DEPARTMENT:
