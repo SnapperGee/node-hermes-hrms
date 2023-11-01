@@ -5,7 +5,7 @@
 import { questions } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
 import { deleteRole, deleteDepartment } from "./lib/db/delete.mjs";
-import { readDepartments, readEmployees, readEmployeesWithManagerId, readEmployeesWithDepartmentId, readRoles } from "./lib/db/read.mjs";
+import { read } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
 import { roleTitleWithDepartmentIdExists } from "./lib/db/util.mjs";
@@ -32,17 +32,17 @@ promptLoop: do
                 continue promptLoop;
             }
         case QueryChoice.VIEW_EMPLOYEES:
-            const employees = await readEmployees();
+            const employees = await read.employees();
             console.table(employees);
             break;
         case QueryChoice.VIEW_EMPLOYEES_BY_MANAGER:
             const managerIdOfEmployeesToView = answers.managerIdToViewEmployeesOf;
-            const employeesSelectedByManager = await readEmployeesWithManagerId(managerIdOfEmployeesToView);
+            const employeesSelectedByManager = await read.employeesWithManagerId(managerIdOfEmployeesToView);
             console.table(employeesSelectedByManager);
             break;
         case QueryChoice.VIEW_EMPLOYEES_BY_DEPARTMENT:
             const departmentIdOfEmployeesToView = answers.departmentIdToViewEmployeesOf;
-            const employeesSelectedByDepartment = await readEmployeesWithDepartmentId(departmentIdOfEmployeesToView);
+            const employeesSelectedByDepartment = await read.employeesWithDepartmentId(departmentIdOfEmployeesToView);
             console.table(employeesSelectedByDepartment);
             break;
         // Validation for the inputted employee names is performed in the
@@ -56,7 +56,7 @@ promptLoop: do
             console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartmentName}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
             break;
         case QueryChoice.VIEW_ROLES:
-            const roles = await readRoles();
+            const roles = await read.roles();
             console.table(roles);
             break;
         // Validation for the inputted role title is performed in the Inquirer
@@ -83,7 +83,7 @@ promptLoop: do
             console.log(`\nDeleted "${titleOfRoleToDelete}" role.\n`);
             break;
         case QueryChoice.VIEW_DEPARTMENTS:
-            const departments = await readDepartments();
+            const departments = await read.departments();
             console.table(departments);
             break;
         // Validation for the inputted department names is performed in the
