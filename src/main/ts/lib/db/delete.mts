@@ -5,3 +5,6 @@ export const deleteDepartment = async (departmentId: number): Promise<void> =>
 
 export const deleteRole = async (roleId: number): Promise<void> =>
     { await connection.execute("DELETE FROM role WHERE id = ?;", [roleId]); }
+
+export const deleteEmployee = async (employeeId: number): Promise<void> =>
+    { await connection.execute("DELETE FROM employee WHERE id = ?;", [employeeId]); }

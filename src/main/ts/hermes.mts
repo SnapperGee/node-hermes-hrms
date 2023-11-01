@@ -4,7 +4,7 @@
 
 import { questions } from "./cli/prompt/question/index.mjs";
 import { QueryChoice } from "./cli/prompt/query-choice.mjs";
-import { deleteRole, deleteDepartment } from "./lib/db/delete.mjs";
+import { deleteRole, deleteDepartment, deleteEmployee } from "./lib/db/delete.mjs";
 import { read } from "./lib/db/read.mjs";
 import { insertDepartment, insertEmployee, insertRole } from "./lib/db/insert.mjs";
 import inquirer, { type Answers } from "inquirer";
@@ -54,6 +54,13 @@ promptLoop: do
             const {managerId, managerName} = answers.managerOfEmployeeToAdd;
             insertEmployee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
             console.log(`\nAdded "${newEmployeeFirstName} ${newEmployeeLastName}" with "${roleTitle}" role of "${roleDepartmentName}" department and ${managerName ? `manager "${managerName}"` : "no manager"}.\n`);
+            break;
+        case QueryChoice.DELETE_EMPLOYEE:
+            const { idOfEmployeeToDelete, nameOfEmployeeToDelete,
+                    roleTitleOfEmployeeToDelete, departmentOfEmployeeToDelete,
+                    managerOfEmployeeToDelete } = answers.employeeToDelete;
+            deleteEmployee(idOfEmployeeToDelete);
+            console.log(`\nDeleted employee "${nameOfEmployeeToDelete}" with "${roleTitleOfEmployeeToDelete}" role of "${departmentOfEmployeeToDelete}" department and ${managerOfEmployeeToDelete ? `manager "${managerOfEmployeeToDelete}"` : "no manager"}.\n`);
             break;
         case QueryChoice.VIEW_ROLES:
             const roles = await read.roles();

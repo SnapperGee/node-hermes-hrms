@@ -4,7 +4,7 @@ import { addDepartmentQuestion, addEmployeeFirstNameQuestion, addEmployeeLastNam
          addRoleSalaryQuestion, addRoleTitleQuestion } from "./question-add.mjs";
 import { queryQuestion } from "./question-query.mjs";
 import { quitQuestion } from "./question-quit.mjs";
-import { deleteDepartmentQuestion, deleteRoleQuestion } from "./question-delete.mjs";
+import { deleteDepartmentQuestion, deleteRoleQuestion, deleteEmployeeQuestion } from "./question-delete.mjs";
 
 export const question = Object.freeze({
     query: queryQuestion,
@@ -14,6 +14,7 @@ export const question = Object.freeze({
     addEmployeeLastName: addEmployeeLastNameQuestion,
     addEmployeeRole: addEmployeeRoleQuestion,
     addEmployeeManager: addEmployeeManagerQuestion,
+    deleteEmployee: deleteEmployeeQuestion,
     roleTitle: addRoleTitleQuestion,
     roleSalary: addRoleSalaryQuestion,
     roleDepartment: addRoleDepartmentQuestion,

@@ -29,6 +29,11 @@ export enum QueryChoice
     ADD_EMPLOYEE = "Add Employee",
 
     /**
+     * Inquirer question choice to delete a preexisting employee.
+     */
+    DELETE_EMPLOYEE = "Delete Employee",
+
+    /**
      * Inquirer question choice to view all roles.
      */
     VIEW_ROLES = "View Roles",

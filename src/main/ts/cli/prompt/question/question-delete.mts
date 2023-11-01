@@ -3,7 +3,7 @@
  */
 
 import { QueryChoice } from "../query-choice.mjs";
-import { readDepartments, readRoles } from "../../../lib/db/read.mjs";
+import { readDepartments, readRoles, readEmployees } from "../../../lib/db/read.mjs";
 import { PREFIX, SUFFIX } from "../util.mjs";
 import { type Question, type Answers } from "inquirer";
 
@@ -27,8 +27,20 @@ export const deleteRoleQuestion: Question = Object.freeze({
     suffix: SUFFIX
 });
 
+export const deleteEmployeeQuestion: Question = Object.freeze({
+    type: "list",
+    name: "employeeToDelete",
+    message: "Choose the employee you'd like to delete",
+    choices: async () => (await readEmployees()).map(({id, name, title, department, manager}) => ({name: `employee: "${name}" | role: "${title}" | department: "${department}"`, value: {idOfEmployeeToDelete: id, nameOfEmployeeToDelete: name, roleTitleOfEmployeeToDelete: title, departmentOfEmployeeToDelete: department, managerOfEmployeeToDelete: manager}})),
+    when: (answers: Answers) => Promise.resolve(answers.queryChoice === QueryChoice.DELETE_EMPLOYEE),
+    prefix: PREFIX,
+    suffix: SUFFIX
+});
+
 export const deleteQuestion = Object.freeze({
-    department: deleteDepartmentQuestion
+    department: deleteDepartmentQuestion,
+    role: deleteRoleQuestion,
+    employee: deleteEmployeeQuestion
 });
 
 export default deleteQuestion;
