@@ -8,3 +8,11 @@ export const deleteRole = async (roleId: number): Promise<void> =>
 
 export const deleteEmployee = async (employeeId: number): Promise<void> =>
     { await connection.execute("DELETE FROM employee WHERE id = ?;", [employeeId]); }
+
+export const deleteQuery = Object.freeze({
+    department: deleteDepartment,
+    role: deleteRole,
+    employee: deleteEmployee
+});
+
+export default deleteQuery;
