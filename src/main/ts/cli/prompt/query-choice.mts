@@ -29,6 +29,11 @@ export enum QueryChoice
     ADD_EMPLOYEE = "Add Employee",
 
     /**
+     * Inquirer question choice to update/change an employee's manager.
+     */
+    UPDATE_EMPLOYEE_MANAGER = "Update an Employee Manager",
+
+    /**
      * Inquirer question choice to delete a preexisting employee.
      */
     DELETE_EMPLOYEE = "Delete Employee",
